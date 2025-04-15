@@ -1,0 +1,119 @@
+/**
+  * @name CatGirlDiscord
+  * @version 1.0
+  * @author @Shiro
+  * @source https://github.com/Shiro4ka
+  * @description Old UI
+*/
+
+
+
+/* Revert Old Icons */
+@import url(https://davart154.github.io/Themes/Icon%20Revert%202023/2023%20Icon%20Revert.css);
+
+
+/* Import Fonts */
+@import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-jp.min.css);
+
+
+
+/* Revert visual refresh server list (Old servers) */
+@import url("https://scattagain.github.io/VencordStuff/css/GuildbarRevert.css");
+:root {
+    --guildbar-avatar-size: 48px !important;
+    --blob-scale: 48;
+    --guildbar-folder-size: var(--guildbar-avatar-size);
+    --folder-blob-scale: var(--blob-scale);
+}
+
+
+
+
+/* Remove Unnecessary Buttons */
+
+[class^=channelAppLauncher_], /* (Apps) */
+#channels [aria-label="초대 코드 만들기"] /* "Create Invite" */
+{
+    display: none !important;
+}
+
+/* Match user section height to adjusted message box */
+:root {
+    --custom-channel-textarea-text-area-height: 60px; /* Default: 48px */
+}
+[aria-label="사용자 영역"] { /* "User Settings" */
+    border-bottom: 0px !important;
+    border-radius: 0px !important;
+    left: 0px !important;
+    bottom: 0px !important;
+    width: 100% !important;
+    padding: 0px 3px 0px 9px;
+    > [class^=container__] {
+        top: 0px;
+        height: var(--custom-channel-textarea-text-area-height);
+    }
+}
+#channels {
+    margin-bottom: 0px;
+}
+[aria-label="서버 사이드바"] { /* "Servers sidebar" */
+    margin-bottom: var(--custom-channel-textarea-text-area-height) !important;
+}
+
+/* Fix title section left padding */
+section[class^=title_] {
+    padding-left: 8px !important;
+}
+
+
+
+/* moves the message buttons above the message to avoid this issue: */
+[class*=buttonContainer] > [class*=buttons_] {
+    transform: translateY(-20%);
+}
+
+/* Fix form modal height */
+[class^=layer_] > form > [class^=focusLock__] {
+    position: relative;
+    max-height: calc(100vh - var(--space-24) * 3);
+    top: calc(var(--space-24) / 2);
+}
+
+
+[class^=chatContent_] > form {
+    /* Align chatbox */
+    padding: 0px !important;
+    > div > [class^=channelTextArea_] {
+        margin: 7px !important;
+        border-bottom: 0px;
+        border-radius: 10px;
+        > [class^=scrollableContainer_] {
+            border-radius: 10px;
+        }
+    }
+    /* Announcement channel bottom UI */
+    > [class^=wrapper__] {
+        margin: 100px;
+        padding: 0px;
+        height: var(--custom-channel-textarea-text-area-height);
+        border-bottom: 0px;
+        border-radius: 0px;
+    }
+}
+
+/*Top Pannel */
+.visual-refresh {
+
+
+	.base_c48ade {
+		grid-template-areas: "titleBar titleBar titleBar" "notice notice notice" "guildsList channelsList page";
+		grid-template-rows: [top] 0px [titlebarEnd] min-content [page] 22px [end];
+	}
+
+	.bar_c38106:not(.systemBar_c38106):not(:has(.channelTabs-trailing)) {
+		padding: 12 12px  !important;
+		height: 50px;
+		margin-top: -13px;
+    }}
+
+    
