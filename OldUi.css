@@ -32,7 +32,7 @@
 /* Remove Unnecessary Buttons */
 
 [class^=channelAppLauncher_], /* (Apps) */
-#channels [aria-label="초대 코드 만들기"] /* "Create Invite" */
+#channels [aria-label="meow"] /* "Create Invite" */
 {
     display: none !important;
 }
