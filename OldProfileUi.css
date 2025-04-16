@@ -6,41 +6,16 @@
   * @description Old user profile
 */
 
-	/*Servers list*/ 
-	.base_c48ade .sidebar_c48ade > .guilds_c48ade {
-		grid-area: guilds;
-		margin-bottom: 0;
-	}
-	.base_c48ade .sidebar_c48ade {
-		display: grid;
-		grid-template-areas: "guilds sidebar" "guilds panels";
-		grid-template-columns: [start] min-content [sidebarStart] unset [end];
-		grid-template-rows: [start] 1fr [panelsStart] min-content [end];
-		width: 310px !important;
-		border-radius: 0;
-	}
-	.base_c48ade .sidebar_c48ade {
-		display: grid;
-		grid-template-areas: "guilds sidebar" "guilds panels";
-		grid-template-columns: [start] min-content [sidebarStart] unset [end];
-		grid-template-rows: [start] 1fr [panelsStart] min-content [end];
-		width: 310px !important;
-		border-radius: 0;
-	}
+    /*Old user profile*/
+    
+    .visual-refresh .panels_c48ade {
+        right: var(--space-xs) !important;
+        left: auto;
+        bottom: var(--space-xs);
+        width: calc(100% - var(--space-xs) * 2 - var(--custom-guild-list-width));
+    }
 
-	/* user panel */
-	.base_c48ade .sidebar_c48ade > .panels_c48ade {
-		grid-area: panels;
-		position: static;
-		inset: auto;
-		.avatar__37e49.wrapper__44b0c {
-			width: 32px !important;
-			height: 32px !important;
-			svg {
-				width: 40px;
-				height: 40px;
-			}
-		}
-	}
-
+.visual-refresh .guilds_c48ade {
+	margin-bottom: 0;
+}
 	
