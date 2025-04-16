@@ -116,4 +116,17 @@ section[class^=title_] {
 		margin-top: -13px;
     }}
 
+    /*Old user profile*/
+    
+    .visual-refresh .panels_c48ade {
+        right: var(--space-xs) !important;
+        left: auto;
+        bottom: var(--space-xs);
+        width: calc(100% - var(--space-xs) * 2 - var(--custom-guild-list-width));
+    }
+
+.visual-refresh .guilds_c48ade {
+	margin-bottom: 0;
+}
+
     
