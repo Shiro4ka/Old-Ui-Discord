@@ -31,8 +31,8 @@
 
 /* Remove Unnecessary Buttons */
 
-[class^=channelAppLauncher_], /* (Apps) */
-#channels [aria-label="meow"] /* "Create Invite" */
+[class^=channelAppLauncher_], /*Apps*/
+#channels [aria-label="meow"] /*Create Invite*/
 {
     display: none !important;
 }
