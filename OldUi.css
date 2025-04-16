@@ -41,7 +41,7 @@
 :root {
     --custom-channel-textarea-text-area-height: 60px; /* Default: 48px */
 }
-[aria-label="사용자 영역"] { /* "User Settings" */
+[aria-label="meow"] { /* "User Settings" */
     border-bottom: 0px !important;
     border-radius: 0px !important;
     left: 0px !important;
@@ -56,7 +56,7 @@
 #channels {
     margin-bottom: 0px;
 }
-[aria-label="서버 사이드바"] { /* "Servers sidebar" */
+[aria-label="meow"] { /* "Servers sidebar" */
     margin-bottom: var(--custom-channel-textarea-text-area-height) !important;
 }
 
