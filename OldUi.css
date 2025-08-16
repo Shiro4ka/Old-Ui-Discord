@@ -1,5 +1,5 @@
 /**
-  * @name OldUi
+  * @name CatGirlDiscord
   * @version 1.0
   * @author @Shiro
   * @source https://github.com/Shiro4ka
@@ -9,10 +9,16 @@
 /* Toggle fixes: add/remove "/*" at the start to turn on/off */
 
 /*Hotfix for the Nitro Themes by Dablulite*/
-/*@import url("https://dablulite.github.io/css-snippets/NitroThemesFix/import.css");
+/*@import url("https://dablulite.github.io/css-snippets/NitroThemesFix/import.css");*/
+
+
+
+
 
 /* Import Fonts */
 @import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-jp.min.css);
+
+
 
 
 
@@ -25,16 +31,20 @@
     --folder-blob-scale: var(--blob-scale);
 }
 
-
-
+/*No activity status */
+[class*='membersGroup']:has([role=button]),
+[class*='member'] [class*='container']:has([class*='badges']) {
+  display: none;
+}
 
 /* Remove Unnecessary Buttons */
 
 [class^=channelAppLauncher_], /*Apps*/
-#channels [aria-label="meow"] /*Create Invite*/
+#channels [aria-label="meow"] /*Invite*/
 {
     display: none !important;
 }
+
 
 /* Match user section height to adjusted message box */
 :root {
@@ -101,6 +111,7 @@ section[class^=title_] {
 }
 
 /*Top Pannel */
+
 .visual-refresh {
 
 
@@ -128,4 +139,55 @@ section[class^=title_] {
 	margin-bottom: 0;
 }
 
-    
+/* Send time hide 
+[class^="timestamp"],
+[class*="timestamp"] {
+    display: none !important;
+} */
+
+
+
+/*Small Badges*/
+
+.chipletContainerInner__10651 > .text__10651 > .tagText__10651 {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 0;
+  will-change: max-width, margin;
+  transition: max-width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              margin 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.chipletContainerInner__10651:hover > .text__10651 > .tagText__10651 {
+  max-width: 20ch;
+  margin-right: .3ch;
+  transition-delay: 0.08s;
+}
+.chipletContainerInner__10651 > .text__10651 > img.badge__10651 {
+  margin-right: 0;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              margin 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.chipletContainerInner__10651:hover > span > img.badge__10651 {
+  transform: rotateZ(360deg);
+  margin-right: .6ch;
+  transition-delay: 0.08s;
+}
+.chipletContainerInner__10651 {
+  position: relative;
+  display: inline-block;
+  background-color: var(--background-mod-subtle);
+  padding: 0 1;
+  margin-left: 0;
+}
+.chipletContainerInner__10651:hover ~ .tagText__10651 {
+  display: block;
+  clear: both;
+  margin-top: .5ch;
+}
+
+/* Create chat*/
+
+button.button__6af3a.sm__6af3a.primary__6af3a.hasText__6af3a.fullWidth__6af3a {
+  display: none !important;
+}
