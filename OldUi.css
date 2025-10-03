@@ -191,3 +191,11 @@ section[class^=title_] {
 button.button__6af3a.sm__6af3a.primary__6af3a.hasText__6af3a.fullWidth__6af3a {
   display: none !important;
 }
+
+/*Activity color fix*/
+[class*="activityPanel"],
+[class*="nowPlayingColumn"],
+[class*="gameActivity"] {
+    background-color: var(--brand-experiment) !important; /* theme color */
+}
+
