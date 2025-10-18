@@ -8,12 +8,6 @@
 
 /* Toggle fixes: add/remove "/*" at the start to turn on/off */
 
-/*Hotfix for the Nitro Themes by Dablulite*/
-/*@import url("https://dablulite.github.io/css-snippets/NitroThemesFix/import.css");*/
-
-
-
-
 
 /* Import Fonts */
 @import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-jp.min.css);
@@ -39,12 +33,18 @@
 
 /* Remove Unnecessary Buttons */
 
-[class^=channelAppLauncher_], /*Apps*/
-#channels [aria-label="meow"] /*Invite*/
-{
-    display: none !important;
+/* Скрываем Apps и Invite, как в твоём примере */
+[class^=channelAppLauncher_],
+ /*Apps*/ #channels [aria-label="meow"]/*Invite*/ 
+ { display: none !important; }
+ 
+/* Hide Nitro Gift button */
+button[aria-label="Send a gift"] {
+  display: none;
 }
-
+ div.button__74017.button__24af7[aria-label="Отправить подарок"] {
+  display: none !important;
+}
 
 /* Match user section height to adjusted message box */
 :root {
@@ -88,10 +88,11 @@ section[class^=title_] {
     top: calc(var(--space-24) / 2);
 }
 
+/*imp */
 
 [class^=chatContent_] > form {
     /* Align chatbox */
-    padding: 0px !important;
+    padding: -10px !important;
     > div > [class^=channelTextArea_] {
         margin: 7px !important;
         border-bottom: 0px;
@@ -188,9 +189,28 @@ section[class^=title_] {
 
 /* Create chat*/
 
-button.button__6af3a.sm__6af3a.primary__6af3a.hasText__6af3a.fullWidth__6af3a {
+button.button_a22cb0.sm_a22cb0.primary_a22cb0.hasText_a22cb0.fullWidth_a22cb0 {
   display: none !important;
 }
+
+/* Hide the ‘Add friends to conversation’ button */
+div.iconWrapper__9293f.clickable__9293f:nth-of-type(4) {
+  display: none !important;
+}
+
+
+
+/* Help hide */
+div.button__85643.iconWrapper__9293f.clickable__9293f {
+  display: none !important;
+}
+
+
+/* Mail hide */
+div.clickable_c99c29 {
+  display: none !important;
+}
+
 
 /*Activity color fix*/
 [class*="activityPanel"],
@@ -199,3 +219,12 @@ button.button__6af3a.sm__6af3a.primary__6af3a.hasText__6af3a.fullWidth__6af3a {
     background-color: var(--brand-experiment) !important; /* theme color */
 }
 
+/* Hide "useless" badge(white thing when you in direct) */
+:not(.pill_e5445c) > .item__58105 {
+    display: none !important;
+}
+
+/* task home (Quest Home) */
+[data-list-item-id^="private-channels-uid_"][href="/quest-home"] {
+  display: none !important;
+}
