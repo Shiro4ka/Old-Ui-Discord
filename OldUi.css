@@ -33,7 +33,7 @@
 
 /* Remove Unnecessary Buttons */
 
-/* Скрываем Apps и Invite, как в твоём примере */
+/*Apps*/
 [class^=channelAppLauncher_],
  /*Apps*/ #channels [aria-label="meow"]/*Invite*/ 
  { display: none !important; }
@@ -194,9 +194,11 @@ button.button_a22cb0.sm_a22cb0.primary_a22cb0.hasText_a22cb0.fullWidth_a22cb0 {
 }
 
 /* Hide the ‘Add friends to conversation’ button */
-div.iconWrapper__9293f.clickable__9293f:nth-of-type(4) {
+div.iconWrapper__9293f.clickable__9293f[aria-label="Добавить друзей в беседу"],
+div.iconWrapper__9293f.clickable__9293f[aria-label="Add Friends to Conversation"] {
   display: none !important;
 }
+
 
 
 
@@ -228,3 +230,7 @@ div.clickable_c99c29 {
 [data-list-item-id^="private-channels-uid_"][href="/quest-home"] {
   display: none !important;
 }
+
+
+
+
