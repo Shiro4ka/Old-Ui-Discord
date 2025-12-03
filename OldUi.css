@@ -34,10 +34,10 @@
 /* Remove Unnecessary Buttons */
 
 /*Apps*/
-[class^=channelAppLauncher_],
- /*Apps*/ #channels [aria-label="meow"]/*Invite*/ 
- { display: none !important; }
- 
+div.button_e6e74f {
+    display: none !important;
+}
+
 /* Hide Nitro Gift button */
 button[aria-label="Send a gift"] {
   display: none;
@@ -232,5 +232,10 @@ div.clickable_c99c29 {
 }
 
 
-
-
+/* fire from tiktok */
+.frequentFriendsRow__1fc18 {
+    display: none !important;
+}
+.sectionDivider_e6b769 {
+    display: none !important;
+}
