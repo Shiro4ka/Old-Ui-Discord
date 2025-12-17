@@ -85,9 +85,9 @@ div[class*="button"][aria-label="Checkpoint"] {
 }
 
 /* Hide Direct Message badge (white dot) / Скрыть белый индикатор в ЛС */
-div[class*="-pill"] > span[class*="-item"] {
+/*div[class*="-pill"] > span[class*="-item"] {
     display: none !important;
-}
+}*/
 
 /* Hide Quest Home / Скрыть вкладку Квестов */
 [data-list-item-id^="private-channels-uid_"][href="/quest-home"] {
