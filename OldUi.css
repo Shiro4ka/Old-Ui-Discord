@@ -1,240 +1,250 @@
 /**
-  * @name CatGirlDiscord
-  * @version 1.0
-  * @author @Shiro
-  * @source https://github.com/Shiro4ka
-  * @description Old UI
+ * @name CatGirlDiscord
+ * @version 1.1
+ * @author @Shiro
+ * @source https://github.com/Shiro4ka
+ * @description Old UI
 */
 
+/*////////////////////////////////////////////////////////////////////////////*/
+/* IMPORTS & FONTS  |  ИМПОРТЫ И ШРИФТЫ                                      */
+/*////////////////////////////////////////////////////////////////////////////*/
+
 /* Toggle fixes: add/remove "/*" at the start to turn on/off */
+/* Переключатель: добавьте/удалите "/*" в начале для вкл/выкл */
 
-
-/* Import Fonts */
 @import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-jp.min.css);
 
-
-
-
-
 /* Revert visual refresh server list (Old servers) */
+/* Возврат старого списка серверов */
 @import url("https://scattagain.github.io/VencordStuff/css/GuildbarRevert.css");
+
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* VARIABLES  |  ПЕРЕМЕННЫЕ                                                  */
+/*////////////////////////////////////////////////////////////////////////////*/
+
 :root {
     --guildbar-avatar-size: 48px !important;
     --blob-scale: 48;
     --guildbar-folder-size: var(--guildbar-avatar-size);
     --folder-blob-scale: var(--blob-scale);
+    
+    /* Custom height for text area logic / Высота текстового поля */
+    --custom-channel-textarea-text-area-height: 60px; /* Default: 48px */
 }
 
-/*No activity status */
-[class*='membersGroup']:has([role=button]),
-[class*='member'] [class*='container']:has([class*='badges']) {
-  display: none;
-}
 
-/* Remove Unnecessary Buttons */
+/*////////////////////////////////////////////////////////////////////////////*/
+/* REMOVE USELESS UI  |  СКРЫТИЕ ЛИШНИХ ЭЛЕМЕНТОВ                            */
+/*////////////////////////////////////////////////////////////////////////////*/
 
-/*Apps*/
-div.button_e6e74f {
+/* Hide Apps button / Скрыть кнопку Приложений */
+div[aria-label="Приложения"],
+div[aria-label="Apps"] {
     display: none !important;
 }
 
-/* Hide Nitro Gift button */
-button[aria-label="Send a gift"] {
-  display: none;
-}
- div.button__74017.button__24af7[aria-label="Отправить подарок"] {
-  display: none !important;
+/* Hide Nitro Gift button / Скрыть кнопку подарка Нитро */
+button[aria-label="Send a gift"],
+div[aria-label="Send a gift"],
+div[aria-label="Отправить подарок"] {
+    display: none !important;
 }
 
-/* Match user section height to adjusted message box */
-:root {
-    --custom-channel-textarea-text-area-height: 60px; /* Default: 48px */
+/* Hide "Create chat" button / Скрыть кнопку "Создать чат" */
+button.button_a22cb0.sm_a22cb0.primary_a22cb0.hasText_a22cb0.fullWidth_a22cb0 {
+    display: none !important;
 }
-[aria-label="meow"] { /* "User Settings" */
+
+/* Hide "Add friends to conversation" / Скрыть "Добавить друзей в беседу" */
+div[aria-label="Добавить друзей в беседу"],
+div[aria-label="Add Friends to Conversation"] {
+    display: none !important;
+}
+/* Hide Mail button / Скрыть кнопку Почты */
+div[aria-label="Почта"],
+div[aria-label="Inbox"] {
+    display: none !important;
+}
+
+/* Hide Help button / Скрыть кнопку Помощи */
+div[aria-label="Помощь"],
+div[aria-label="Help"] {
+    display: none !important;
+}
+/* No activity status / Скрыть статус активности */
+[class*='membersGroup']:has([role=button]),
+[class*='member'] [class*='container']:has([class*='badges']) {
+    display: none;
+}
+
+/* Checkpoint */
+div[class*="button"][aria-label="Checkpoint"] {
+    display: none !important;
+}
+
+/* Hide Direct Message badge (white dot) / Скрыть белый индикатор в ЛС */
+div[class*="-pill"] > span[class*="-item"] {
+    display: none !important;
+}
+
+/* Hide Quest Home / Скрыть вкладку Квестов */
+[data-list-item-id^="private-channels-uid_"][href="/quest-home"] {
+    display: none !important;
+}
+
+/* Hide Friends recommendations / Скрыть рекомендации друзей  */
+._1fc18cdca0445214-frequentFriendsRow,
+.e6b7699ce8339e1c-sectionDivider {
+    display: none !important;
+}
+
+/* Hide timestamps (Optional) / Скрыть время сообщений (Опционально) */
+/* [class^="timestamp"],
+[class*="timestamp"] {
+    display: none !important;
+} 
+*/
+
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* LAYOUT & POSITIONING  |  ЛЕЙАУТ И ПОЗИЦИОНИРОВАНИЕ                        */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* User Settings area adjustments / Настройка области пользователя */
+[aria-label="meow"] { 
     border-bottom: 0px !important;
     border-radius: 0px !important;
     left: 0px !important;
     bottom: 0px !important;
     width: 100% !important;
     padding: 0px 3px 0px 9px;
-    > [class^=container__] {
-        top: 0px;
-        height: var(--custom-channel-textarea-text-area-height);
-    }
 }
-#channels {
-    margin-bottom: 0px;
+
+[aria-label="meow"] > [class^=container__] {
+    top: 0px;
+    height: var(--custom-channel-textarea-text-area-height);
 }
-[aria-label="meow"] { /* "Servers sidebar" */
+
+/* Servers sidebar bottom margin / Отступ списка серверов снизу */
+[aria-label="meow"] { 
     margin-bottom: var(--custom-channel-textarea-text-area-height) !important;
 }
 
-/* Fix title section left padding */
+#channels {
+    margin-bottom: 0px;
+}
+
+/* Fix title section left padding / Фикс отступа заголовка */
 section[class^=title_] {
     padding-left: 8px !important;
 }
 
-
-
-/* moves the message buttons above the message to avoid this issue: */
+/* Move message buttons above message / Кнопки сообщения над сообщением */
 [class*=buttonContainer] > [class*=buttons_] {
     transform: translateY(-20%);
 }
 
-/* Fix form modal height */
+/* Fix form modal height / Фикс высоты модальных окон */
 [class^=layer_] > form > [class^=focusLock__] {
     position: relative;
     max-height: calc(100vh - var(--space-24) * 3);
     top: calc(var(--space-24) / 2);
 }
 
-/*imp */
-
+/* Chat Input Styling / Стиль поля ввода чата */
 [class^=chatContent_] > form {
-    /* Align chatbox */
     padding: -10px !important;
-    > div > [class^=channelTextArea_] {
-        margin: 7px !important;
-        border-bottom: 0px;
-        border-radius: 10px;
-        > [class^=scrollableContainer_] {
-            border-radius: 10px;
-        }
-    }
-    /* Announcement channel bottom UI */
-    > [class^=wrapper__] {
-        margin: 100px;
-        padding: 0px;
-        height: var(--custom-channel-textarea-text-area-height);
-        border-bottom: 0px;
-        border-radius: 0px;
-    }
 }
 
-/*Top Pannel */
+[class^=chatContent_] > form > div > [class^=channelTextArea_] {
+    margin: 7px !important;
+    border-bottom: 0px;
+    border-radius: 10px;
+}
 
-.visual-refresh {
+[class^=chatContent_] > form > div > [class^=channelTextArea_] > [class^=scrollableContainer_] {
+    border-radius: 10px;
+}
+
+/* Announcement channel bottom UI / Нижний UI в каналах объявлений */
+[class^=chatContent_] > form > [class^=wrapper__] {
+    margin: 100px;
+    padding: 0px;
+    height: var(--custom-channel-textarea-text-area-height);
+    border-bottom: 0px;
+    border-radius: 0px;
+}
 
 
-	.base_c48ade {
-		grid-template-areas: "titleBar titleBar titleBar" "notice notice notice" "guildsList channelsList page";
-		grid-template-rows: [top] 0px [titlebarEnd] min-content [page] 22px [end];
-	}
-
-	.bar_c38106:not(.systemBar_c38106):not(:has(.channelTabs-trailing)) {
-		padding: 12 12px  !important;
-		height: 50px;
-		margin-top: -13px;
-    }}
-
-    /*Old user profile*/
+/*////////////////////////////////////////////////////////////////////////////*/
+/* VISUAL REFRESH  |  НОВЫЙ ИНТЕРФЕЙС                                        */
+/*////////////////////////////////////////////////////////////////////////////*/
+/* Old user profile positioning / Позиционирование старого профиля */
+.visual-refresh [class*="panels"] {
+    right: var(--space-xs) !important;
+    left: auto !important;
+    bottom: var(--space-xs) !important;
     
-    .visual-refresh .panels_c48ade {
-        right: var(--space-xs) !important;
-        left: auto;
-        bottom: var(--space-xs);
-        width: calc(100% - var(--space-xs) * 2 - var(--custom-guild-list-width));
-    }
-
+    width: calc(99% - var(--space-xs) * 2) !important;
+    
+    z-index: 1002 !important;
+}
 .visual-refresh .guilds_c48ade {
-	margin-bottom: 0;
-}
-
-/* Send time hide 
-[class^="timestamp"],
-[class*="timestamp"] {
-    display: none !important;
-} */
-
-
-
-/*Small Badges*/
-
-.chipletContainerInner__10651 > .text__10651 > .tagText__10651 {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 0;
-  will-change: max-width, margin;
-  transition: max-width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-              margin 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.chipletContainerInner__10651:hover > .text__10651 > .tagText__10651 {
-  max-width: 20ch;
-  margin-right: .3ch;
-  transition-delay: 0.08s;
-}
-.chipletContainerInner__10651 > .text__10651 > img.badge__10651 {
-  margin-right: 0;
-  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-              margin 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.chipletContainerInner__10651:hover > span > img.badge__10651 {
-  transform: rotateZ(360deg);
-  margin-right: .6ch;
-  transition-delay: 0.08s;
-}
-.chipletContainerInner__10651 {
-  position: relative;
-  display: inline-block;
-  background-color: var(--background-mod-subtle);
-  padding: 0 1;
-  margin-left: 0;
-}
-.chipletContainerInner__10651:hover ~ .tagText__10651 {
-  display: block;
-  clear: both;
-  margin-top: .5ch;
-}
-
-/* Create chat*/
-
-button.button_a22cb0.sm_a22cb0.primary_a22cb0.hasText_a22cb0.fullWidth_a22cb0 {
-  display: none !important;
-}
-
-/* Hide the ‘Add friends to conversation’ button */
-div.iconWrapper__9293f.clickable__9293f[aria-label="Добавить друзей в беседу"],
-div.iconWrapper__9293f.clickable__9293f[aria-label="Add Friends to Conversation"] {
-  display: none !important;
+    margin-bottom: 0;
 }
 
 
+/*////////////////////////////////////////////////////////////////////////////*/
+/* COSMETICS & ANIMATIONS  |  КОСМЕТИКА И АНИМАЦИИ                           */
+/*////////////////////////////////////////////////////////////////////////////*/
 
-
-/* Help hide */
-div.button__85643.iconWrapper__9293f.clickable__9293f {
-  display: none !important;
-}
-
-
-/* Mail hide */
-div.clickable_c99c29 {
-  display: none !important;
-}
-
-
-/*Activity color fix*/
+/* Activity Color Fix / Фикс цвета активности */
 [class*="activityPanel"],
 [class*="nowPlayingColumn"],
 [class*="gameActivity"] {
     background-color: var(--brand-experiment) !important; /* theme color */
 }
 
-/* Hide "useless" badge(white thing when you in direct) */
-:not(.pill_e5445c) > .item__58105 {
-    display: none !important;
+/* --- SMALL BADGES (Маленькие значки) --- */
+
+/* Tag Text / Текст тега */
+._10651c5cfe637db6-chipletContainerInner ._10651c5cfe637db6-text ._10651c5cfe637db6-tagText {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    will-change: max-width, margin;
+    transition: max-width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                margin 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* task home (Quest Home) */
-[data-list-item-id^="private-channels-uid_"][href="/quest-home"] {
-  display: none !important;
+/* Hover: Reveal text / Наведение: Раскрытие текста */
+._10651c5cfe637db6-chipletContainerInner:hover ._10651c5cfe637db6-text ._10651c5cfe637db6-tagText {
+    max-width: 20ch;
+    margin-right: .3ch;
+    transition-delay: 0.08s;
 }
 
+/* Badge Image / Изображение бейджа */
+._10651c5cfe637db6-chipletContainerInner img._10651c5cfe637db6-badge {
+    margin-right: 0;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                margin 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
+/* Hover: Rotate badge / Наведение: Вращение бейджа */
+._10651c5cfe637db6-chipletContainerInner:hover img._10651c5cfe637db6-badge {
+    transform: rotateZ(360deg);
+    margin-right: .6ch;
+}
 
-/* fire from tiktok */
-._1fc18cdca0445214-frequentFriendsRow {
-    display: none !important;}
-.e6b7699ce8339e1c-sectionDivider {
-    display: none !important;}
+/* Container / Контейнер */
+._10651c5cfe637db6-chipletContainerInner {
+    position: relative;
+    display: inline-block;
+    background-color: var(--background-mod-subtle);
+    padding: 0 1px;
+    margin-left: .6ch; /* Offset from nickname / Отступ от ника */
+}
