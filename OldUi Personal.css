@@ -1,0 +1,474 @@
+/**
+ * @name OldUiShiroVer
+ * @version 1.6.7
+ * @author @Shiro
+ * @source https://github.com/Shiro4ka
+ * @description Old UI + Quality of Life
+ */
+
+/* ┌─────────────────────────────────────────────────────────────┐
+   │                  TABLE OF CONTENTS                          │
+   ├─────────────────────────────────────────────────────────────┤
+   │ 1. Imports & Fonts              | Импорты и шрифты         │
+   │ 2. Variables & Global Fixes     | Переменные и глобальные  │
+   │ 3. Hidden UI Elements           | Скрытие лишних элементов │
+   │ 4. Layout & Positioning         | Лейаут и позиционирование│
+   │ 5. Visual Refresh Compatibility | Совместимость с новым UI │
+   │ 6. Cosmetics & Colors           | Косметика и цвета        │
+   │ 7. Small Badges Animations      | Анимации бейджей         │
+   │ 8. Vencord Notifications        | Уведомления Vencord      │
+   │ 9. Picker Theme                 | Тема пикера              │
+   └─────────────────────────────────────────────────────────────┘ */
+   
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 1.                         IMPORTS |ИМПОРТЫ                                */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+@import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-jp.min.css);
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 2. VARIABLES & GLOBAL FIXES  |  ПЕРЕМЕННЫЕ И ГЛОБАЛЬНЫЕ ФИКСЫ             */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+[class^=clickableSticker] { width: fit-content; } /* Фикс размера стикеров */
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 3. HIDDEN UI ELEMENTS  |  СКРЫТИЕ ЛИШНИХ ЭЛЕМЕНТОВ                         */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* Toolbar buttons | Кнопки в верхней панели */
+div[aria-label="Приложения"], div[aria-label="Apps"] { display: none !important; }
+div[aria-label="Почта"], div[aria-label="Inbox"] { display: none !important; }
+div[aria-label="Помощь"], div[aria-label="Help"] { display: none !important; }
+.item_c1e9c4#message-video-stats-for-nerds { display: none !important; }
+
+/* Nitro Gift button | Кнопка подарка Nitro */
+button:has(svg path[d*="M-7,10"]),
+div[role="button"]:has(svg path[d*="M-7,10"]) { display: none !important; }
+
+/* DM / Sidebar elements | Элементы в ЛС и сайдбаре */
+div[class*="privateChannelRecipientsInviteButtonIconContainer"] { display: none !important; }
+div[aria-label="Добавить друзей в беседу"], div[aria-label="Add Friends to Conversation"] { display: none !important; }
+span[class*="item__58105"] { display: none !important; } /* белая точка в ЛС */
+
+/* Navigation & Misc | Навигация и прочее */
+div[class*="backForwardButtons__63abb"] { display: none !important; }
+div[class*="sectionDivider_e6b769"] { display: none !important; }
+[data-list-item-id^="private-channels-uid_"][href="/quest-home"] { display: none !important; }
+._1fc18cdca0445214-frequentFriendsRow { display: none !important; }
+div[class*="clickable__81391"] { display: none !important; } /* DevTools */
+div[class*="button"][aria-label="Checkpoint"] { display: none !important; }
+
+/* Activity status in member list | Статус активности в списке участников */
+[class*='membersGroup']:has([role=button]),
+[class*='member'] [class*='container']:has([class*='badges']) { display: none; }
+
+.containerWithoutTruncatedText_c9d15c {
+    display: none !important;
+}
+.iconsContainer__972a0 > svg.favoriteIcon__972a0 {
+    display: none !important;
+}
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 4. LAYOUT & POSITIONING  |  ЛЕЙАУТ И ПОЗИЦИОНИРОВАНИЕ                      */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+
+/* Либо просто убрать все эффекты/цвета у ников */
+[style*="--custom-display-name-styles"] {
+    --custom-display-name-styles-main-color: currentColor !important;
+    --custom-display-name-styles-light-1-color: currentColor !important;
+    --custom-display-name-styles-light-2-color: currentColor !important;
+    --custom-display-name-styles-dark-1-color: currentColor !important;
+    --custom-display-name-styles-dark-2-color: currentColor !important;
+    --custom-display-name-styles-toon-stroke-color: transparent !important;
+    --custom-display-name-styles-neon-stroke-color: transparent !important;
+
+}
+
+[aria-label="meow"] {
+    border-bottom: 0 !important;
+    border-radius: 0 !important;
+    left: 0px !important;
+    bottom: 0px !important;
+    width: 100% !important;
+    padding: 0px 3px 0px 9px !important;
+    margin-bottom: var(--custom-channel-textarea-text-area-height) !important;
+}
+
+[aria-label="meow"] > [class^=container__] {
+    top: 0;
+    height: var(--custom-channel-textarea-text-area-height);
+}
+
+#channels { margin-bottom: 0; }
+
+section[class^=title_] { padding-left: 8px !important; } /* Отступ заголовка канала */
+
+[class*=buttonContainer] > [class*=buttons_] { transform: translateY(-20%); } /* Кнопки сообщений выше сообщения */
+
+[class^=chatContent_] > form { padding: 0 !important; }
+
+[class^=chatContent_] > form > div > [class^=channelTextArea_] {
+    margin: 7px !important;
+    border-radius: 10px;
+    border-bottom: 0;
+}
+
+[class^=chatContent_] > form > div > [class^=channelTextArea_] > [class^=scrollableContainer_] {
+    border-radius: 10px;
+}
+
+
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 5. VISUAL REFRESH COMPATIBILITY  |  СОВМЕСТИМОСТЬ С НОВЫМ ИНТЕРФЕЙСОМ      */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* Old user panel position (for new UI) | Старое позиционирование панели пользователя */
+.visual-refresh [class*="panels"] {
+    right: var(--space-xs) !important;
+    left: auto !important;
+    bottom: var(--space-xs) !important;
+    width: calc(99% - var(--space-xs) * 2) !important;
+    z-index: 1002 !important;
+}
+
+/* Remove bottom margin from server list | Убираем нижний отступ списка серверов */
+.visual-refresh .guilds_c48ade { margin-bottom: 0; }
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 6. COSMETICS & COLORS  |  КОСМЕТИКА И ЦВЕТА                                */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CUSTOMIZE HERE | НАСТРОЙ ПОД СЕБЯ
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+    --picker-bg:         #120e2b; /* Main bg | Основной фон пикера */
+    --picker-bg-dark:    #0d0a20; /* Dark bg — search bar, sidebar, gif cards | Тёмный фон */
+    --picker-accent:     #27204f; /* Accent — active tab, selected category | Акцент */
+    --picker-border:     #2a1f5a; /* Border color | Цвет границ */
+    --picker-cat-color:  #c084fc; /* Category header icon + label | Иконка и текст категорий */
+    --picker-btn-bg:     #27204f; /* "Add emoji" button bg | Фон кнопки "Добавить эмодзи" */
+    --picker-friend:     #06040f; /* "Friend list | Активность друзей */
+}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Main picker background | Основной фон всех пикеров */
+.contentWrapper__08434,
+.wrapper_e94b8c,
+.listWrapper__8ef02,
+.wrapper__8ef02,
+.container_fed6d3,
+.wrapper_c0e32c,
+.emojiPicker_c0e32c,
+.bodyWrapper_c0e32c,
+.emojiPickerListWrapper_c0e32c,
+.listWrapper_c656ac,
+.listItems_affa7e,
+.scroller_affa7e,
+.header_c656ac,
+.packHeader_e94b8c,
+.categorySection_c656ac,
+.wrapper__4e6ce,
+.categoryList__3ad28,
+.categoryList_c0e32c,
+.header__8ef02,
+.wrapper_cdf8a9,
+.header_fed6d3,
+.header_c0e32c,
+.inspector_aeaaeb {
+    background: var(--picker-bg) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Search bar | Строка поиска */
+.wrapper__72c38,
+.container__72c38 {
+    background: var(--picker-bg-dark) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 8px !important;
+}
+
+/* Search text & cursor | Текст и курсор в поиске */
+.input__0f084 {
+    color: #e2e8f0 !important;
+    caret-color: var(--picker-accent) !important;
+}
+
+/* Text selection | Выделение текста */
+.input__0f084::selection {
+    background: var(--picker-accent) !important;
+    color: #fff !important;
+}
+
+/* Tab bar bg | Фон панели табов */
+.nav__08434 {
+    background: var(--picker-bg) !important;
+}
+
+/* Inactive tabs | Неактивные табы */
+.navButton__08434 {
+    color: #a78bca !important;
+    background: transparent !important;
+    border-radius: 6px !important;
+}
+
+/* Active tab | Активный таб */
+.navButtonActive__08434 {
+    background: var(--picker-accent) !important;
+    color: #fff !important;
+}
+
+/* GIF cards | Карточки гифок */
+.result__2dc39 {
+    background: var(--picker-bg-dark) !important;
+    border-radius: 8px !important;
+}
+
+/* Sidebar category icons | Иконки категорий в сайдбаре */
+.stickerCategory__3ad28,
+.categoryItem_b9ee0c {
+    background: var(--picker-bg-dark) !important;
+    border-radius: 6px !important;
+}
+
+/* Selected sidebar category | Выбранная категория в сайдбаре */
+.stickerCategoryGenericSelected__3ad28 {
+    background: var(--picker-accent) !important;
+    border-radius: 6px !important;
+}
+
+.categoryItemDefaultCategorySelected_b9ee0c {
+    color: var(--picker-accent) !important;
+}
+
+/* Inspector text | Текст инспектора */
+.titlePrimary_aeaaeb {
+    color: #e2e8f0 !important;
+}
+
+.titleSecondary_aeaaeb {
+    color: #a78bca !important;
+}
+
+/* Category header icon + label | Иконка и название категории */
+.headerIcon__14245 svg path,
+.headerLabel__14245 {
+    fill: var(--picker-cat-color) !important;
+    color: var(--picker-cat-color) !important;
+}
+
+/* Collapse arrow | Стрелка сворачивания */
+.headerCollapseIcon__14245 svg path {
+    fill: var(--picker-cat-color) !important;
+}
+.tile__4e9aa.square__4e9aa .gradient_f11c9b *[style*="background"] {
+  background: unset !important;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* Discord Profile Editor */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+    --profile-bg: #e5d4d0;
+    --profile-bg-dark: #d8c5c0;
+    --profile-accent: #caaea7;
+    --profile-border: #b99f98;
+}
+#profile-modal-editing-panel,
+.panel_b08638,
+.panelInner_b08638,
+.scroller_b08638{
+    background:var(--profile-bg)!important;
+}
+.groupLabelHeading_b08638,
+.text-sm\/medium_cf4812,
+.text-md\/medium_cf4812,
+.text-xs\/normal_cf4812,
+.heading-xl\/semibold_cf4812{
+    color:var(--profile-text)!important;
+}
+
+.keyboardModeNotice_b08638{
+    color:var(--profile-subtext)!important;
+}
+
+.tile__4e9aa{
+    background:var(--profile-bg-dark)!important;
+    border:1px solid var(--profile-border)!important;
+    border-radius:14px!important;
+    transition:.15s;
+}
+.selectButton_cfc01a{
+    background:var(--profile-bg-dark)!important;
+    border:1px solid var(--profile-border)!important;
+    border-radius:10px!important;
+}
+
+.groupLabelIcon_b08638 {
+    display: none !important;
+}
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* ===== АКТИВНЫЕ КОНТАКТЫ (Now Playing) ===== */
+
+/* Фон карточек контактов */
+.itemCard__7e549 {
+    background: var(--picker-friend) !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--picker-friend) !important;
+}
+
+.itemCard__7e549:hover {
+    border-color: var(--picker-friend) !important;
+}
+
+/* Фон контейнера панели */
+.container__7d20c {
+    background: var(--picker-friend) !important;
+}
+
+/* Context menu | Контекстное меню */
+.menu_c1e9c4 {
+    background: var(--picker-bg) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Menu items hover | Ховер пунктов */
+.item_c1e9c4:hover {
+    background: var(--picker-accent) !important;
+}
+
+/* Quick react row | Строка быстрых реакций */
+.wrapper_f563df {
+    background: var(--picker-bg-dark) !important;
+}
+
+/* Separator | Разделитель */
+.separator_c1e9c4 {
+    border-color: var(--picker-border) !important;
+}
+
+
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 7.                   BADGE ANIMATIONS | АНИМАЦИИ БЕЙДЖЕЙ                   */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* Tag text — hidden by default | Текст тега — скрыт по умолчанию */
+.tagText__10651 {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    opacity: 0;
+    font-size: 0;
+    line-height: 0;
+    transition:
+        max-width 0.35s ease,
+        opacity 0.2s ease;
+}
+
+/* Show on hover | Показать при наведении */
+.chipletContainerInner__10651:hover .tagText__10651 {
+    max-width: 120px;
+    opacity: 1;
+    font-size: inherit;
+    line-height: 1;
+    transition:
+        max-width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.25s ease;
+}
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 8. VENCORD NOTIFICATIONS  |  УВЕДОМЛЕНИЯ VENCORD                          */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* Notification popup | Всплывающее уведомление */
+.vc-notification-root {
+    background: #8d063a46;
+    backdrop-filter: blur(40px);
+    border: 2px solid #b32b5838;
+    filter: drop-shadow(0px 3px 8px #000000);
+    transition: 0.5s ease;
+}
+
+/* Notification hover | Наведение на уведомление */
+.vc-notification-root:hover {
+    background: #c5084765;
+    border: 2px solid #b80d46a6;
+    transform: scale(0.99) translateY(2%);
+}
+
+/* Vencord settings modal | Модальное окно настроек Vencord */
+.root__49fc1:has(.vc-settings-modal) {
+    border: 2px solid #df1256c5;
+    background: #c71e571e;
+    backdrop-filter: blur(50px);
+}
+
+/*VERY IMPORTANT BIG SHIRO
+
+
+...........-%@@@@@@@%%@@@%%%@@@@@@@@@@@@@@%#*****%@@%%@@@@%%@@@@@@@@@@%%@@@@@@@%%@@@@@*....-*%*:....
+..........:%%@@@@@%%@@%%@@@@@@@@@@@@@@@@@@#**+**%@%###%#%%%%@@@@@@@@@@@%%@@@@@@%##%%%@%=:.....=#*:..
+..........#%@@@@%%%@#%@@@@@@@@@@@@@@@@@@@%#*+**%@%%@@%@%%#**%@@@@@@@@@%@%%@@@@%@%#*%%#@%:.......-#+.
+.........*%@@@%%%%##@@@@@@@@@@@@@@@@@@@@@**+**%@@%@@@@@@@@#**@@@@@@@@@%%@%%@@@@%%***%%%%*.........-*
+........-%%%%#%%#@%%@@@@@@@@@@@@@@@@@@@@#****%@@%@@@@@@@@@@#*%@@@@@@@@%%@@%@@@@@##***%%%#:........:.
+........*%%%#%#%@@%@@@@@@@@@@@@@@@@@@@@%****#@@%@@@@@@@@@@@%##@@@@@%%@%#%@%%%@@@@#****%#%-..........
+.......:%%#%%%%@@@%@@@@@@@@@@@@@@@@@%%@%***#@@%%@@@@@@@@@@@@%#%@@@@%%@%*#@#%%%@@@%****##%=..........
+.......*%*%%#%@@@@%@@@@@@@%@@@@@@@@%%%%%***%@%%@@@@@@@@@@@@@@#%@@@%%#%%**%%%@%@@@@@#**##%+..........
+......-#*%%#%@@@@@@@@@@@@%%@@@@@@@%%%%%#**#@%%@@@@@@@@@@@@@@@%#@@@%#*%%**%%%@@#%@@@@#**#%=..........
+......=+%%*%%@@@@%@@@@@@%%%@@@@@@@%#%%%**#%@%@@@@@@@@@@@@@@%###%%%#**%%+*%#%@@%#%@@@@%*#%-..........
+......+%%*%%@@@@@%@@@@@%%#%@%@@@@%##%%%**%%%%@@@@@@@@@@@@@@@@@%******%%**%#%@@@#*%@@@@%*#-..........
+.....:#%*%%@@@@@%%@@@@@%#*#%#%%%%#*#%%%*#%%%@@@@@@@@@@@@@@@@@@@%%#++*%%+*%+#%@@@***%@@%%#:..........
+.....*%*%%@@@@@@%%@@@@%#*+#%*%%%#**#%%%*%%%@@@@@@@@@@@@@@@@@@@#+*%+++#%+*%**#%%%%***%%%@%%-.........
+....+###%%@@@@@%%#@@@@#*+=*#*%%%***#%%%*%%%@@@@@@@@@@@@@@@@@@@%**%*++#%**%##+*%%%%+**+%%%%%*:.......
+...:*##%%@@@@@%###%@%%*+==**+%%#++*#%%%%%#@@@@@@@@@@@@@@@@@@@@@#*%#+**%**#%#*+*%%%%**#%*#%%%%=:::.::
+...=###%%@@@@%#***%%%#+===+*+%%*+++#%%%%%@@@@@%*+*#%%@@@@%%%%@@%%#%*+*%***#=+#*+%%%%*%%=+=#%%%%=-::-
+...*#*%%%@@%%*++++%%%**%%#**+##+=++#%%%#%@%#=-::....:-=*%%@@%%%@@#%*+*%****#%@%*+*%%%#+===--=*%%#+-=
+...*#*%%%%%%*====+%%##*=-+++=**===+#%%%#%%*-::--:........:=#%@@@@%##**%##*%@@@@%*+=*%%#-:-==--:-=*#+
+...***%%%%%+=----+%%**----=+======+#%%%#@@@#-=%#-::......-:=%%@@@@#%**##*##%@@@@%*++#+%#=:-=::::...:
+...+=*#%%%*------*%%*=----=+-=-===+#%%%%@@@@#*@@@#----::-#%*%@@@@@%%#**#*%%%%#**%+++%#:-**-::-......
+...-=*###*=-:----#%#*--:---*----==+#%%%%@@@@%#@@##--+--==%@@@@@@@@%%%**%==:......-=*%==:::=+::......
+...:==###=-::::--#%%++-::--*=---==+%%%%%@@@@@@@@#++---==*@@@@@@@@@@%%#**-....==:.:-#%==:....:::.....
+....==*#*-:::::-=%%%**=-:--*=---==+%%%%%@@@@@@@@@*#%++%*%@@@@@@@@@@@#%***:---%#---=##:::------:.....
+...:=-**=::::::-=#%%+-*+-::*+----=+#%%%%%@@@@@@@@#**%%*#@@@@@@@@@@@@%%%**+=-*%%+=-=%*:..............
+...-+++*::::::::+#%#=--+*=-+*----=+#%%%%%@@@@@@@%%%%###%@@@@@@@@@@@@@%%#*#*=%%#==-+%*-..............
+...=***=::::::::*###=----+*=#=--==+#%%%%%@@%%%%%%%%%%@@@@@@@@@@@@@@@@%%%*%#*%%+===+%=:..............
+...+***:::::::::*##*--:::::-*+---=+#%%%%%@@%%%%%%%%%%@@@@@@@@@@@@@@@@@#%%*+*%%==--*%=:..............
+..:+**+::.:::::-*##+--::::-:+#=--==*%%%%%@@@@@%%%%%%@@@@@@@@@@@@@@@@@@@%%%%##*==--#%=-..............
+..-+*+-::....::-*##=-:::::::-#+--==*%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%*+==--#%=-...........::.
+..=+++::.....::-*##--::::::::**---=+%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%#%+===-##*:......:==-.---
+..=++=:......::-*#*-::::::::::#=---+%%%%%#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%===-#%#:......===:..::
+.:=++-:.......:=**+:::::::::::+*---=#%%%%#%%@@@@@@@@@@@@@@@@@@@@@%%@@@@@@@#%%%%==-#%*=...........--:
+.:=+=:.........+**=::::::::.::=*=--=*%%%%*++#%%@@@@@@@@@@@@@@@@@@@@@@@@@%#++%%%#==##**..........:===
+.-==-.........:+**-:::.::::.:::**=-=+%%%%#=---=*#%%@@@@@@@@@@@@@@@@@@%%*+++++%%%*=#%*+:..........:=-
+.-==-.........-+*+::........:::-#+-==#%%%#=-------==*%%%@@@@@@@@@@@%**%#+=====%%%*#%#+=........:=-..
+.---:.........=++=:..:.....:=+=-*#===#%%%%=------------=+*#%%%%%%#*#%#%+=======%%%*%%+*-=+=...:***-.
+:---:........:+++-.....:.:.=%%%%*#*==*%%%%*+-------------=======++*%%##==----===%%##%+*****:...===:.
+:---.........-++=:......:::#%%%%#*#==+#%%%**+-------------------==*%%#*=--------=%%*#++#==-.........
+---:.........=++-.......::+%%%%%%*#*==#%%%#%%#=-------:.:::---:--=*%%*+=-------:-=##*+=**...........
+---:........-=+=:...:...:-#%%%%%%%**==*%%%#%%%%%%*---::......::--=*%%*=--------:--*#+===#-..........
+---........:===-........:+#%%%%%%%#*+=+#%%#%%%%%%**:-:........:*=-*%#+=--------:---*#---+*:......:..
+--:........-===:........:##%%%%%%%%**=+####%%%%#--*--:........-*=-*%#+-------:::::--*=---**....+++-.
+:-........:===:........-**+*#%%%%%%**+=#####%%#-::+=+-.......:=::-+##+----::::::::::+*---=*-...+*+:.
+::........-==-:.....:=*####=-*#%%%%%++-*##*#%#::.:+***.......:-:::=##+--::::::::::::-*::--+*........
+::.......:-==:....:+**#####*=#**#%%#*+=+*#**#-....-#**:.....:+-:.:-##+-:::::::::.::.:=-::--+=.......
+:........--=-:.:=+***#######=##%#+###===***==.....:#*#*::.::**:...:+*+-:::::::::.:.::::::::=*-......
+:.......:--=--=+****########+*#####+**=-***=+:....:**##*::-#%+.....-*+::::::::::...::::.::::==......
+........----=++******########*#######+=-+**+*#-...:+*###+=#%%=:.....=+:::::::::.........:::::=-..:--
+.......::-=+++*********###############+==**+*##-..:=#+##*-=#%*:.....:+-::::::..........:.::::-=..:--
+.......:===+++**********##############*--**+*###-::=#**#+--+##*+=-:::--::::::.............:.::--....
+......:-==+++++***********############*-:=*+*####-:-###=--:-*%%#+###*-#*-:::................::.:....
+.....--==++++++++************#########*=:-++*####*-:##*#+:::-##%*#%%%%%%%#-:........................
+....:--====++++++++**************####**=.:+=*#####*-*#***-:::*##*#%%%%%%%%#*:.......................
+....:-======+===-=+++******************=..-=*#########**#=:::+##+#%%%%%%%%#**+......................
+....:----======:.:=+++++******+:+******=..:-+*#########+**:::+#**##%%%%%#####*=....-................
+
+*/
