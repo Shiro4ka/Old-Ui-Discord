@@ -7,108 +7,241 @@
  */
 
 /* ┌─────────────────────────────────────────────────────────────┐
-   │                  TABLE OF CONTENTS                          │
+   │                     TABLE OF CONTENTS                       │
    ├─────────────────────────────────────────────────────────────┤
-   │ 1. Imports & Fonts              | Импорты и шрифты         │
-   │ 2. Variables & Global Fixes     | Переменные и глобальные  │
-   │ 3. Hidden UI Elements           | Скрытие лишних элементов │
-   │ 4. Layout & Positioning         | Лейаут и позиционирование│
-   │ 5. Visual Refresh Compatibility | Совместимость с новым UI │
-   │ 6. Cosmetics & Colors           | Косметика и цвета        │
-   │ 7. Small Badges Animations      | Анимации бейджей         │
-   │ 8. Vencord Notifications        | Уведомления Vencord      │
-   │ 9. Picker Theme                 | Тема пикера              │
+   │  1. Imports                  | Импорты и шрифты             │
+   │  2. Variables                | Переменные (настройка цветов)│
+   │  3. Global Fixes             | Глобальные фиксы             │
+   │  4. Hidden UI                | Скрытие элементов            │
+   │     4.1 Toolbar              |   Верхняя панель             │
+   │     4.2 DM / Sidebar         |   ЛС и сайдбар               │
+   │     4.3 Navigation & Misc    |   Навигация и прочее         │
+   │     4.4 Members & Activity   |   Участники и активность     │
+   │  5. Layout                   | Лейаут и позиционирование    │
+   │  6. Display Names            | Стили ников                  │
+   │  7. Privacy Masks            | Скрытие личных данных        │
+   │  8. Picker Theme             | Тема пикеров                 │
+   │  9. Context Menu             | Контекстное меню             │
+   │ 10. Active Contacts          | Активные контакты            │
+   │ 11. Badge Animations         | Анимации бейджей             │
+   │ 12. Vencord                  | Уведомления и настройки      │
    └─────────────────────────────────────────────────────────────┘ */
-   
+
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 1.                         IMPORTS |ИМПОРТЫ                                */
+/* 1. IMPORTS | ИМПОРТЫ                                                       */
 /*////////////////////////////////////////////////////////////////////////////*/
 
 @import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-jp.min.css);
 
-/*////////////////////////////////////////////////////////////////////////////*/
-/* 2. VARIABLES & GLOBAL FIXES  |  ПЕРЕМЕННЫЕ И ГЛОБАЛЬНЫЕ ФИКСЫ             */
-/*////////////////////////////////////////////////////////////////////////////*/
-
-[class^=clickableSticker] { width: fit-content; } /* Фикс размера стикеров */
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 3. HIDDEN UI ELEMENTS  |  СКРЫТИЕ ЛИШНИХ ЭЛЕМЕНТОВ                         */
+/* 2. VARIABLES | ПЕРЕМЕННЫЕ                                                  */
 /*////////////////////////////////////////////////////////////////////////////*/
 
-/* Toolbar buttons | Кнопки в верхней панели */
-div[aria-label="Приложения"], div[aria-label="Apps"] { display: none !important; }
-div[aria-label="Почта"], div[aria-label="Inbox"] { display: none !important; }
-div[aria-label="Помощь"], div[aria-label="Help"] { display: none !important; }
-.item_c1e9c4#message-video-stats-for-nerds { display: none !important; }
+/* ━━━━━━━━━━━━━━━━━━━━ PICKER THEME | ТЕМА ПИКЕРОВ ━━━━━━━━━━━━━━━━━━━━ */
 
-/* Nitro Gift button | Кнопка подарка Nitro */
-button:has(svg path[d*="M-7,10"]),
-div[role="button"]:has(svg path[d*="M-7,10"]) { display: none !important; }
+:root {
+    --picker-bg:        #120e2b; /* Main bg | Основной фон пикера */
+    --picker-bg-dark:   #0d0a20; /* Dark bg (search, sidebar, gif cards) | Тёмный фон */
+    --picker-accent:    #27204f; /* Accent (active tab, selected category) | Акцент */
+    --picker-border:    #2a1f5a; /* Border color | Цвет границ */
+    --picker-cat-color: #c084fc; /* Category header icon + label | Иконка и текст категорий */
+    --picker-btn-bg:    #27204f; /* Buttons bg | Фон кнопок */
+}
 
-/* DM / Sidebar elements | Элементы в ЛС и сайдбаре */
-div[class*="privateChannelRecipientsInviteButtonIconContainer"] { display: none !important; }
-div[aria-label="Добавить друзей в беседу"], div[aria-label="Add Friends to Conversation"] { display: none !important; }
-span[class*="item__58105"] { display: none !important; } /* белая точка в ЛС */
+/* ── Main background | Основной фон ───────────────────────────────────────── */
 
-/* Navigation & Misc | Навигация и прочее */
-div[class*="backForwardButtons__63abb"] { display: none !important; }
-div[class*="sectionDivider_e6b769"] { display: none !important; }
-[data-list-item-id^="private-channels-uid_"][href="/quest-home"] { display: none !important; }
-._1fc18cdca0445214-frequentFriendsRow { display: none !important; }
-div[class*="clickable__81391"] { display: none !important; } /* DevTools */
-div[class*="button"][aria-label="Checkpoint"] { display: none !important; }
+.contentWrapper_58b0l2,
+.nav_58b0l2,
+.container_rfDq2B,
+.header_rfDq2B,
+.content_rfDq2B,
+[class*="wrapper_kSdzCr"],
+[class*="packHeader_"],
+[class*="header_6c9R7U"],
+[class*="header_WSRqCO"],
+[class*="listItems_"],
+[class*="scroller_"]:has([class*="categoryItem_"]),
+[class*="inspector_"] {
+    background: var(--picker-bg) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
 
-/* Activity status in member list | Статус активности в списке участников */
-[class*='membersGroup']:has([role=button]),
-[class*='member'] [class*='container']:has([class*='badges']) { display: none; }
+/* ── Search | Поиск (гифки, стикеры, эмодзи) ──────────────────────────────── */
 
-.containerWithoutTruncatedText_c9d15c {
+.header_rfDq2B .wrapper_UcGqzv,
+[class*="header_WSRqCO"] [class*="wrapper_UcGqzv"] {
+    background: var(--picker-bg-dark) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 8px !important;
+}
+
+.header_rfDq2B .input_0PLWhS,
+[class*="header_WSRqCO"] [class*="input_"] {
+    color: #e2e8f0 !important;
+    caret-color: var(--picker-accent) !important;
+}
+
+.header_rfDq2B .input_0PLWhS::selection,
+[class*="header_WSRqCO"] [class*="input_"]::selection {
+    background: var(--picker-accent) !important;
+    color: #fff !important;
+}
+
+/* ── Tabs | Табы ──────────────────────────────────────────────────────────── */
+
+.navButton_58b0l2 {
+    color: #a78bca !important;
+    background: transparent !important;
+    border-radius: 6px !important;
+}
+
+.navButtonActive_58b0l2 {
+    background: var(--picker-accent) !important;
+    color: #fff !important;
+}
+
+/* ── GIF cards | Карточки гифок ───────────────────────────────────────────── */
+
+.result_H8nOze {
+    background: var(--picker-bg-dark) !important;
+    border-radius: 8px !important;
+}
+
+/* ── Category headers | Заголовки категорий ───────────────────────────────── */
+
+[class*="wrapper_kSdzCr"] [class*="headerIcon_"] svg path,
+[class*="wrapper_kSdzCr"] [class*="headerLabel_"] {
+    fill: var(--picker-cat-color) !important;
+    color: var(--picker-cat-color) !important;
+}
+
+[class*="wrapper_kSdzCr"] [class*="headerCollapseIcon_"] path {
+    fill: var(--picker-cat-color) !important;
+}
+
+/* ── Sidebar categories | Категории в сайдбаре ────────────────────────────── */
+
+[class*="categoryItem_"] {
+    background: var(--picker-bg-dark) !important;
+    border-radius: 6px !important;
+}
+
+[class*="categoryIcon_ufks4w"] {
+    color: var(--picker-cat-color) !important;
+}
+
+[class*="categoryItem_"]:has([class*="selected__"]) {
+    background: var(--picker-accent) !important;
+}
+
+/* ── Sticker shortcut button | Кнопка-ярлык стикеров ──────────────────────── */
+
+[class*="standardStickerShortcut_"] {
+    background: var(--picker-btn-bg) !important;
+    color: var(--picker-cat-color) !important;
+    border-radius: 6px !important;
+}
+
+[class*="standardStickerShortcut_"]:hover {
+    background: var(--picker-accent) !important;
+    color: #fff !important;
+}
+
+/* ── Inspector | Нижняя панель описания ───────────────────────────────────── */
+
+[class*="inspector_"] [class*="titlePrimary_"]   { color: #e2e8f0 !important; }
+[class*="inspector_"] [class*="titleSecondary_"] { color: #a78bca !important; }
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 4. HIDDEN UI | СКРЫТИЕ ЛИШНИХ ЭЛЕМЕНТОВ                                   */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* ── 4.1 Toolbar | Верхняя панель ─────────────────────────────────────────── */
+
+div[aria-label="Приложения"], div[aria-label="Apps"],
+div[aria-label="Почта"],      div[aria-label="Inbox"],
+div[aria-label="Помощь"],     div[aria-label="Help"] {
     display: none !important;
 }
+
+/* Nitro gift button | Кнопка подарка Nitro */
+button:has(svg path[d*="M-7,10"]),
+div[role="button"]:has(svg path[d*="M-7,10"]) {
+    display: none !important;
+}
+
+/* Video stats for nerds | Статистика видео */
+.item_c1e9c4#message-video-stats-for-nerds { display: none !important; }
+
+
+/* ── 4.2 DM / Sidebar | ЛС и сайдбар ──────────────────────────────────────── */
+
+/* Add to conversation | Добавить в беседу */
+div[class*="privateChannelRecipientsInviteButtonIconContainer"],
+div[aria-label="Добавить в беседу"],
+div[aria-label="Add to Conversation"] {
+    display: none !important;
+}
+
+/* White dot in DM | Белая точка в ЛС */
+span[class*="item__o8_Xq visible__o8_Xq"] { display: none !important; }
+
+/* Pin icon | Иконка закрепа */
+.favoriteIcon_zln_tS,
 .iconsContainer__972a0 > svg.favoriteIcon__972a0 {
     display: none !important;
 }
 
+/* Frequent friends row | Строка частых друзей */
+._1fc18cdca0445214-frequentFriendsRow { display: none !important; }
+
+/* Quest home link | Ссылка на квесты */
+[data-list-item-id^="private-channels-uid_"][href="/quest-home"] { display: none !important; }
+div[class*="sectionDivider_u88IQl"] { display: none !important; }
+
+
+/* ── 4.3 Navigation & Misc | Навигация и прочее ───────────────────────────── */
+
+div[class*="backForwardButtons_nS9Yqn"],
+div[class*="sectionDivider_e6b769"],
+div[class*="button"][aria-label="Checkpoint"] {
+    display: none !important;
+}
+
+/* DevTools */
+div[class*="clickable_fErCLM"] { display: none !important; }
+
+
+/* ── 4.4 Members & Activity | Участники и активность ──────────────────────── */
+
+/* Activity in member list | Активность в списке участников */
+[class*='membersGroup']:has([role=button]),
+[class*='member'] [class*='container']:has([class*='badges']) {
+    display: none;
+}
+
+/* Activity text under user | Текст активности под пользователем */
+.containerWithoutTruncatedText_c9d15c,
+.activityStatusText__972a0 {
+    display: none !important;
+}
+
+
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 4. LAYOUT & POSITIONING  |  ЛЕЙАУТ И ПОЗИЦИОНИРОВАНИЕ                      */
+/* 5. LAYOUT | ЛЕЙАУТ И ПОЗИЦИОНИРОВАНИЕ                                      */
 /*////////////////////////////////////////////////////////////////////////////*/
 
+/* Channel title padding | Отступ заголовка канала */
+section[class^=title_] { padding-left: 8px !important; }
 
-/* Либо просто убрать все эффекты/цвета у ников */
-[style*="--custom-display-name-styles"] {
-    --custom-display-name-styles-main-color: currentColor !important;
-    --custom-display-name-styles-light-1-color: currentColor !important;
-    --custom-display-name-styles-light-2-color: currentColor !important;
-    --custom-display-name-styles-dark-1-color: currentColor !important;
-    --custom-display-name-styles-dark-2-color: currentColor !important;
-    --custom-display-name-styles-toon-stroke-color: transparent !important;
-    --custom-display-name-styles-neon-stroke-color: transparent !important;
-
-}
-
-[aria-label="meow"] {
-    border-bottom: 0 !important;
-    border-radius: 0 !important;
-    left: 0px !important;
-    bottom: 0px !important;
-    width: 100% !important;
-    padding: 0px 3px 0px 9px !important;
-    margin-bottom: var(--custom-channel-textarea-text-area-height) !important;
-}
-
-[aria-label="meow"] > [class^=container__] {
-    top: 0;
-    height: var(--custom-channel-textarea-text-area-height);
-}
+/* Message buttons above message | Кнопки сообщений выше сообщения */
+[class*=buttonContainer] > [class*=buttons_] { transform: translateY(-20%); }
 
 #channels { margin-bottom: 0; }
 
-section[class^=title_] { padding-left: 8px !important; } /* Отступ заголовка канала */
-
-[class*=buttonContainer] > [class*=buttons_] { transform: translateY(-20%); } /* Кнопки сообщений выше сообщения */
-
+/* Chat input | Поле ввода */
 [class^=chatContent_] > form { padding: 0 !important; }
 
 [class^=chatContent_] > form > div > [class^=channelTextArea_] {
@@ -124,40 +257,56 @@ section[class^=title_] { padding-left: 8px !important; } /* Отступ заг�
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 5. VISUAL REFRESH COMPATIBILITY  |  СОВМЕСТИМОСТЬ С НОВЫМ ИНТЕРФЕЙСОМ      */
+/* 6. DISPLAY NAMES | СТИЛИ НИКОВ                                             */
 /*////////////////////////////////////////////////////////////////////////////*/
 
-/* Old user panel position (for new UI) | Старое позиционирование панели пользователя */
-.visual-refresh [class*="panels"] {
-    right: var(--space-xs) !important;
-    left: auto !important;
-    bottom: var(--space-xs) !important;
-    width: calc(99% - var(--space-xs) * 2) !important;
-    z-index: 1002 !important;
+/* Remove all nickname effects/colors | Убрать эффекты и цвета у ников */
+[style*="--custom-display-name-styles"] {
+    --custom-display-name-styles-main-color:         currentColor !important;
+    --custom-display-name-styles-light-1-color:      currentColor !important;
+    --custom-display-name-styles-light-2-color:      currentColor !important;
+    --custom-display-name-styles-dark-1-color:       currentColor !important;
+    --custom-display-name-styles-dark-2-color:       currentColor !important;
+    --custom-display-name-styles-toon-stroke-color:  transparent !important;
+    --custom-display-name-styles-neon-stroke-color:  transparent !important;
 }
 
-/* Remove bottom margin from server list | Убираем нижний отступ списка серверов */
-.visual-refresh .guilds_c48ade { margin-bottom: 0; }
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 6. COSMETICS & COLORS  |  КОСМЕТИКА И ЦВЕТА                                */
+/* 7. PRIVACY MASKS | СКРЫТИЕ ЛИЧНЫХ ДАННЫХ В НАСТРОЙКАХ                      */
 /*////////////////////////////////////////////////////////////////////////////*/
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   CUSTOMIZE HERE | НАСТРОЙ ПОД СЕБЯ
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-:root {
-    --picker-bg:         #120e2b; /* Main bg | Основной фон пикера */
-    --picker-bg-dark:    #0d0a20; /* Dark bg — search bar, sidebar, gif cards | Тёмный фон */
-    --picker-accent:     #27204f; /* Accent — active tab, selected category | Акцент */
-    --picker-border:     #2a1f5a; /* Border color | Цвет границ */
-    --picker-cat-color:  #c084fc; /* Category header icon + label | Иконка и текст категорий */
-    --picker-btn-bg:     #27204f; /* "Add emoji" button bg | Фон кнопки "Добавить эмодзи" */
-    --picker-friend:     #06040f; /* "Friend list | Активность друзей */
+/* Username (disabled) | Юзернейм (отключено)
+.container__75920[data-nav-anchor-key='account_info_username_setting'] {
+    .stack_dbd263 > .text-md\/medium_cf4812 {
+        font-size: 0;
+        &::before { content: '202174190558642177'; font-size: 1rem; }
+    }
 }
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+*/
 
-/* Main picker background | Основной фон всех пикеров */
+/* Email | Почта */
+.container__75920[data-nav-anchor-key='account_info_email_setting'] {
+    .stack_dbd263 > .text-md\/medium_cf4812 {
+        font-size: 0;
+        &::before { content: '***************@gmail.com'; font-size: 1rem; }
+    }
+}
+
+/* Phone | Телефон */
+.container__75920[data-nav-anchor-key='account_info_phone_setting'] {
+    .stack_dbd263 > .text-md\/medium_cf4812 {
+        font-size: 0;
+        &::before { content: '************8784'; font-size: 1rem; }
+    }
+}
+
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 8. PICKER THEME | ТЕМА ПИКЕРОВ (эмодзи / гифки / стикеры)                  */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* Main background | Основной фон */
 .contentWrapper__08434,
 .wrapper_e94b8c,
 .listWrapper__8ef02,
@@ -186,7 +335,8 @@ section[class^=title_] { padding-left: 8px !important; } /* Отступ заг�
     box-shadow: none !important;
 }
 
-/* Search bar | Строка поиска */
+/* ── Search | Поиск ───────────────────────────────────────────────────────── */
+
 .wrapper__72c38,
 .container__72c38 {
     background: var(--picker-bg-dark) !important;
@@ -194,199 +344,148 @@ section[class^=title_] { padding-left: 8px !important; } /* Отступ заг�
     border-radius: 8px !important;
 }
 
-/* Search text & cursor | Текст и курсор в поиске */
 .input__0f084 {
     color: #e2e8f0 !important;
     caret-color: var(--picker-accent) !important;
 }
 
-/* Text selection | Выделение текста */
 .input__0f084::selection {
     background: var(--picker-accent) !important;
     color: #fff !important;
 }
 
-/* Tab bar bg | Фон панели табов */
-.nav__08434 {
-    background: var(--picker-bg) !important;
-}
+/* ── Tabs | Табы ──────────────────────────────────────────────────────────── */
 
-/* Inactive tabs | Неактивные табы */
+.nav__08434 { background: var(--picker-bg) !important; }
+
 .navButton__08434 {
     color: #a78bca !important;
     background: transparent !important;
     border-radius: 6px !important;
 }
 
-/* Active tab | Активный таб */
 .navButtonActive__08434 {
     background: var(--picker-accent) !important;
     color: #fff !important;
 }
 
-/* GIF cards | Карточки гифок */
+/* ── GIFs | Гифки ─────────────────────────────────────────────────────────── */
+
 .result__2dc39 {
     background: var(--picker-bg-dark) !important;
     border-radius: 8px !important;
 }
 
-/* Sidebar category icons | Иконки категорий в сайдбаре */
+/* ── Sidebar categories | Категории в сайдбаре ────────────────────────────── */
+
 .stickerCategory__3ad28,
 .categoryItem_b9ee0c {
     background: var(--picker-bg-dark) !important;
     border-radius: 6px !important;
 }
 
-/* Selected sidebar category | Выбранная категория в сайдбаре */
 .stickerCategoryGenericSelected__3ad28 {
     background: var(--picker-accent) !important;
     border-radius: 6px !important;
 }
 
-.categoryItemDefaultCategorySelected_b9ee0c {
-    color: var(--picker-accent) !important;
-}
+.categoryItemDefaultCategorySelected_b9ee0c { color: var(--picker-accent) !important; }
 
-/* Inspector text | Текст инспектора */
-.titlePrimary_aeaaeb {
-    color: #e2e8f0 !important;
-}
+/* ── Category header | Заголовок категории ────────────────────────────────── */
 
-.titleSecondary_aeaaeb {
-    color: #a78bca !important;
-}
-
-/* Category header icon + label | Иконка и название категории */
 .headerIcon__14245 svg path,
 .headerLabel__14245 {
     fill: var(--picker-cat-color) !important;
     color: var(--picker-cat-color) !important;
 }
 
-/* Collapse arrow | Стрелка сворачивания */
-.headerCollapseIcon__14245 svg path {
-    fill: var(--picker-cat-color) !important;
-}
-.tile__4e9aa.square__4e9aa .gradient_f11c9b *[style*="background"] {
-  background: unset !important;
-}
+.headerCollapseIcon__14245 svg path { fill: var(--picker-cat-color) !important; }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-/* Discord Profile Editor */
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-:root {
-    --profile-bg: #e5d4d0;
-    --profile-bg-dark: #d8c5c0;
-    --profile-accent: #caaea7;
-    --profile-border: #b99f98;
-}
-#profile-modal-editing-panel,
-.panel_b08638,
-.panelInner_b08638,
-.scroller_b08638{
-    background:var(--profile-bg)!important;
-}
-.groupLabelHeading_b08638,
-.text-sm\/medium_cf4812,
-.text-md\/medium_cf4812,
-.text-xs\/normal_cf4812,
-.heading-xl\/semibold_cf4812{
-    color:var(--profile-text)!important;
-}
+/* ── Inspector | Инспектор ────────────────────────────────────────────────── */
 
-.keyboardModeNotice_b08638{
-    color:var(--profile-subtext)!important;
-}
+.titlePrimary_aeaaeb   { color: #e2e8f0 !important; }
+.titleSecondary_aeaaeb { color: #a78bca !important; }
 
-.tile__4e9aa{
-    background:var(--profile-bg-dark)!important;
-    border:1px solid var(--profile-border)!important;
-    border-radius:14px!important;
-    transition:.15s;
-}
-.selectButton_cfc01a{
-    background:var(--profile-bg-dark)!important;
-    border:1px solid var(--profile-border)!important;
-    border-radius:10px!important;
-}
 
-.groupLabelIcon_b08638 {
-    display: none !important;
-}
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-/* ===== АКТИВНЫЕ КОНТАКТЫ (Now Playing) ===== */
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 9. CONTEXT MENU | КОНТЕКСТНОЕ МЕНЮ                                         */
+/*////////////////////////////////////////////////////////////////////////////*/
 
-/* Фон карточек контактов */
-.itemCard__7e549 {
-    background: var(--picker-friend) !important;
-    border-radius: 8px !important;
-    border: 1px solid var(--picker-friend) !important;
-}
-
-.itemCard__7e549:hover {
-    border-color: var(--picker-friend) !important;
-}
-
-/* Фон контейнера панели */
-.container__7d20c {
-    background: var(--picker-friend) !important;
-}
-
-/* Context menu | Контекстное меню */
 .menu_c1e9c4 {
     background: var(--picker-bg) !important;
     border: none !important;
     box-shadow: none !important;
 }
 
-/* Menu items hover | Ховер пунктов */
-.item_c1e9c4:hover {
-    background: var(--picker-accent) !important;
-}
+.item_c1e9c4:hover { background: var(--picker-accent) !important; }
+
+.separator_c1e9c4 { border-color: var(--picker-border) !important; }
 
 /* Quick react row | Строка быстрых реакций */
-.wrapper_f563df {
-    background: var(--picker-bg-dark) !important;
-}
-
-/* Separator | Разделитель */
-.separator_c1e9c4 {
-    border-color: var(--picker-border) !important;
-}
-
+.wrapper_f563df { background: var(--picker-bg-dark) !important; }
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 7.                   BADGE ANIMATIONS | АНИМАЦИИ БЕЙДЖЕЙ                   */
+/* 10. ACTIVE CONTACTS | АКТИВНЫЕ КОНТАКТЫ (Now Playing)                      */
 /*////////////////////////////////////////////////////////////////////////////*/
 
-/* Tag text — hidden by default | Текст тега — скрыт по умолчанию */
-.tagText__10651 {
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: 0;
-    opacity: 0;
-    font-size: 0;
-    line-height: 0;
+/* Panel container | Контейнер панели */
+.container__7d20c { background: var(--picker-friend) !important; }
+
+/* Contact cards | Карточки контактов */
+.itemCard__7e549,
+.itemCard__7e549:hover {
+    background: var(--picker-friend) !important;
+    border: 1px solid var(--picker-friend) !important;
+    border-radius: 8px !important;
+}
+
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 11. BADGE ANIMATIONS | АНИМАЦИИ БЕЙДЖЕЙ                                    */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* Badge container | Контейнер бейджа */
+[class*="clanTag_"] [class*="text_"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    overflow: visible !important;
+    -webkit-line-clamp: unset !important;
+    line-clamp: unset !important;
+}
+
+/* Tag text hidden by default | Текст тега скрыт по умолчанию */
+[class*="clanTag_"] [class*="tagText_"] {
+    display: inline-block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    max-width: 0 !important;
+    margin-left: 0 !important;
+    opacity: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
     transition:
         max-width 0.35s ease,
-        opacity 0.2s ease;
+        margin-left 0.35s ease,
+        opacity 0.2s ease !important;
 }
 
 /* Show on hover | Показать при наведении */
-.chipletContainerInner__10651:hover .tagText__10651 {
-    max-width: 120px;
-    opacity: 1;
-    font-size: inherit;
-    line-height: 1;
+[class*="clanTag_"]:hover [class*="tagText_"] {
+    max-width: 120px !important;
+    margin-left: 4px !important;
+    opacity: 1 !important;
+    font-size: 12px !important;
+    line-height: 1 !important;
     transition:
         max-width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-        opacity 0.25s ease;
+        margin-left 0.45s ease,
+        opacity 0.25s ease !important;
 }
 
+
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 8. VENCORD NOTIFICATIONS  |  УВЕДОМЛЕНИЯ VENCORD                          */
+/* 12. VENCORD | УВЕДОМЛЕНИЯ И НАСТРОЙКИ VENCORD                              */
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Notification popup | Всплывающее уведомление */
@@ -394,18 +493,17 @@ section[class^=title_] { padding-left: 8px !important; } /* Отступ заг�
     background: #8d063a46;
     backdrop-filter: blur(40px);
     border: 2px solid #b32b5838;
-    filter: drop-shadow(0px 3px 8px #000000);
+    filter: drop-shadow(0 3px 8px #000000);
     transition: 0.5s ease;
 }
 
-/* Notification hover | Наведение на уведомление */
 .vc-notification-root:hover {
     background: #c5084765;
     border: 2px solid #b80d46a6;
     transform: scale(0.99) translateY(2%);
 }
 
-/* Vencord settings modal | Модальное окно настроек Vencord */
+/* Settings modal | Модальное окно настроек */
 .root__49fc1:has(.vc-settings-modal) {
     border: 2px solid #df1256c5;
     background: #c71e571e;
