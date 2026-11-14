@@ -28,11 +28,11 @@
    │     9.4 GIF Picker            |   Гифки                     │
    │     9.5 Sticker Sidebar       |   Стикеры                   │
    │     9.6 Inspector             |   Инспектор                 │
-   │     9. Inspector             |   Инспектор                 │
    │ 10. Context Menu              | Контекстное меню (ПКМ)      │
    │ 11. Active Contacts           | Активные контакты           │
-   │ 12. Badge Animations          | Анимации бейджей            │
-   │ 13. Vencord                   | Уведомления и настройки     │
+   │ 12. Search & Dialogs          | Ctrl+K, вкладки, сообщение  │
+   │ 13. Badge Animations          | Анимации бейджей            │
+   │ 14. Vencord                   | Уведомления и настройки     │
    └─────────────────────────────────────────────────────────────┘ */
 
 
@@ -72,14 +72,19 @@
 }
 
 
+/* Softer accent colors for menus and tabs (tweak the % to taste)
+   Приглушённые акценты для меню и вкладок (меняй проценты под себя) */
+:root {
+    --set-accent:       color-mix(in srgb, var(--picker-accent) 40%, var(--picker-bg-dark));
+    --set-accent-hover: color-mix(in srgb, var(--picker-accent) 60%, var(--picker-bg-dark));
+    --set-icon:         color-mix(in srgb, var(--picker-cat-color) 60%, var(--picker-bg-dark));
+    --set-dim:          color-mix(in srgb, var(--picker-text-dim) 70%, var(--picker-bg-dark));
+}
+
+
 /*////////////////////////////////////////////////////////////////////////////*/
 /* 3. GLOBAL FIXES | ГЛОБАЛЬНЫЕ ФИКСЫ                                         */
 /*////////////////////////////////////////////////////////////////////////////*/
-
-/* Tasks | Задания */
-.container__60f82 > div:not(:has(.expirationCopy_b5b7aa)) {
-    display: none;
-}
 
 /* Sticker size fix | Фикс размера стикеров */
 [class^=clickableSticker] {
@@ -598,7 +603,245 @@ section[class^=title_] {
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 12. BADGE ANIMATIONS | АНИМАЦИИ БЕЙДЖЕЙ                                    */
+/* 12. SEARCH & DIALOGS | ПОИСК, ВКЛАДКИ, НОВОЕ СООБЩЕНИЕ                     */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* ── 12.1 Quick Switcher | Быстрый поиск ───────────────────────────────────── */
+
+/* Re-point Discord's own surface variables to theme colors, then paint directly
+   Переназначаем штатные переменные Discord на цвета темы и красим напрямую */
+body [data-mana-component="modal"]:has([class*="quickswitcher_"]) {
+    --background-surface-high:   var(--picker-bg);
+    --background-surface-higher: var(--picker-bg);
+    --background-base-low:       var(--picker-bg);
+    --background-base-lower:     var(--picker-bg-dark);
+    --background-base-lowest:    var(--picker-bg-dark);
+    --background-mod-subtle:     var(--set-accent);
+    --background-mod-normal:     var(--set-accent);
+    --background-mod-strong:     var(--set-accent-hover);
+    --modal-background:          var(--picker-bg);
+    --input-background:          var(--picker-bg-dark);
+    background: var(--picker-bg) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+body [class*="quickswitcher_"] {
+    background: transparent !important;
+}
+
+/* Input | Поле ввода */
+body [class*="quickswitcher_"] [class*="input_"] {
+    background: var(--picker-bg-dark) !important;
+    color: var(--picker-text) !important;
+    caret-color: var(--set-icon) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 8px !important;
+}
+
+body [class*="quickswitcher_"] [class*="input_"]::placeholder {
+    color: var(--set-dim) !important;
+}
+
+/* Results area | Область результатов */
+body [class*="quickswitcher_"] [class*="resultsArea_"] {
+    background: var(--picker-bg-dark) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 8px !important;
+}
+
+body [class*="quickswitcher_"] [class*="scroller_"],
+body [class*="quickswitcher_"] [class*="protip_"] {
+    background: transparent !important;
+}
+
+/* Group headers | Заголовки групп */
+body [class*="quickswitcher_"] [class*="header_hm"] {
+    color: var(--set-dim) !important;
+}
+
+/* Results | Результаты */
+body [class*="quickswitcher_"] [class*="result_hm"] {
+    background: transparent !important;
+    color: var(--set-dim) !important;
+    border-radius: 6px !important;
+}
+
+body [class*="quickswitcher_"] [class*="result_hm"]:hover {
+    background: color-mix(in srgb, var(--set-accent) 50%, transparent) !important;
+}
+
+/* Selected result | Выбранный результат */
+body [class*="quickswitcher_"] [class*="result_hm"][aria-selected="true"] {
+    background: var(--set-accent) !important;
+    color: var(--picker-text) !important;
+}
+
+/* Names and secondary text | Названия и второстепенный текст */
+body [class*="quickswitcher_"] [class*="match_hm"] {
+    color: var(--picker-text) !important;
+}
+
+body [class*="quickswitcher_"] [class*="username_hm"],
+body [class*="quickswitcher_"] [class*="note_hm"],
+body [class*="quickswitcher_"] [class*="miscContainer_"] {
+    color: var(--set-dim) !important;
+}
+
+/* Channel icons | Иконки каналов */
+body [class*="quickswitcher_"] [class*="icon_hm"] {
+    color: var(--set-icon) !important;
+}
+
+/* Tip at the bottom | Подсказка внизу */
+body [class*="quickswitcher_"] [class*="protip_"] [class*="pro_"],
+body [class*="quickswitcher_"] [class*="autocompleteQuerySymbol_"],
+body [class*="quickswitcher_"] [class*="protip_"] a {
+    color: var(--set-icon) !important;
+}
+
+body [class*="quickswitcher_"] [class*="tip_"] {
+    color: var(--set-dim) !important;
+}
+
+
+/* ── 12.2 Friends tabs | Вкладки друзей ────────────────────────────────────── */
+
+/* Tab background only, text color is left untouched
+   Только фон вкладки, цвет текста не трогаем */
+body [role="tab"][class*="themed_"]:not([class*="primary"]) {
+    --background-mod-subtle: var(--set-accent);
+    --background-mod-normal: var(--set-accent);
+    --background-mod-strong: var(--set-accent-hover);
+    border-radius: 6px !important;
+}
+
+body [role="tab"][class*="themed_"]:not([class*="primary"]):hover {
+    background-color: color-mix(in srgb, var(--set-accent) 50%, transparent) !important;
+}
+
+/* Selected tab | Выбранная вкладка */
+body [role="tab"][class*="themed_"][aria-selected="true"]:not([class*="primary"]) {
+    background-color: var(--set-accent) !important;
+    background-image: none !important;
+}
+
+
+/* ── 12.3 New message / group DM modal | Окно «Новое сообщение» ─────────────── */
+
+/* Window: re-point Discord surface variables to theme colors
+   Окно: переназначаем штатные переменные Discord на цвета темы */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) {
+    --background-surface-high:   var(--picker-bg);
+    --background-surface-higher: var(--picker-bg);
+    --background-base-low:       var(--picker-bg);
+    --background-base-lower:     var(--picker-bg-dark);
+    --background-base-lowest:    var(--picker-bg-dark);
+    --background-mod-subtle:     var(--set-accent);
+    --background-mod-normal:     var(--set-accent);
+    --background-mod-strong:     var(--set-accent-hover);
+    --modal-background:          var(--picker-bg);
+    --input-background:          var(--picker-bg-dark);
+    background: var(--picker-bg) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+/* Inner layers: no own background | Внутренние слои: без своего фона */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="section_dvN"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="header_dvN"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="bodyControls_"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="bodyList_"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="bodySpacer"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_"] {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Title, subtitle, close button | Заголовок, подзаголовок, кнопка закрытия */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="headerTitle_"] {
+    color: var(--picker-text) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="headerSubtitle_"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="helperTextContainer_"] > * {
+    color: var(--set-dim) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="button_F7qvhY"][class*="icon-only"] {
+    background: transparent !important;
+    color: var(--set-icon) !important;
+}
+
+/* Search | Поиск */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="searchBar_"] [class*="wrapper_UcGqzv"] {
+    background: var(--picker-bg-dark) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 8px !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="searchBar_"] input {
+    color: var(--picker-text) !important;
+    caret-color: var(--set-icon) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="searchBar_"] input::placeholder {
+    color: var(--set-dim) !important;
+}
+
+/* Friend rows | Строки друзей */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="friendWrapper_"] [class*="friend_"] {
+    background: transparent !important;
+    border-radius: 8px !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="friendWrapper_"]:hover [class*="friend_"] {
+    background: color-mix(in srgb, var(--set-accent) 50%, transparent) !important;
+}
+
+/* Selected row | Выбранная строка */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="friendSelected_"] {
+    background: var(--set-accent) !important;
+}
+
+/* Names and secondary text | Ники и второстепенный текст */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="nickname_"] {
+    color: var(--picker-text) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="match_"] > div,
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="discordTag_"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="mutualGuildCount_"] {
+    color: var(--set-dim) !important;
+}
+
+/* Checkbox | Чекбокс */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="checkboxIndicator_"] {
+    color: var(--set-icon) !important;
+    border-color: var(--set-dim) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [role="checkbox"][aria-checked="true"] [class*="checkboxIndicator_"] {
+    background: var(--set-accent-hover) !important;
+    border-color: var(--set-icon) !important;
+    color: var(--picker-text) !important;
+}
+
+/* Footer buttons: background only, text color is left untouched
+   Кнопки внизу: только фон, цвет текста не трогаем */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_"] [class*="button_F7qvhY"][class*="secondary_"] {
+    background: var(--set-accent) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_"] [class*="button_F7qvhY"][class*="primary_"] {
+    background: color-mix(in srgb, var(--picker-accent) 75%, var(--picker-bg-dark)) !important;
+}
+
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 13. BADGE ANIMATIONS | АНИМАЦИИ БЕЙДЖЕЙ                                    */
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Badge container | Контейнер бейджа */
@@ -656,7 +899,7 @@ span[class*="chipletContainerInner_"][class*="clanTag_"] > [class*="text_"] {
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 13. VENCORD | УВЕДОМЛЕНИЯ И НАСТРОЙКИ VENCORD                              */
+/* 14. VENCORD | УВЕДОМЛЕНИЯ И НАСТРОЙКИ VENCORD                              */
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Notification popup | Всплывающее уведомление */
