@@ -7,29 +7,32 @@
  */
 
 /* ┌─────────────────────────────────────────────────────────────┐
-   │                     TABLE OF CONTENTS                       │
+   │                      TABLE OF CONTENTS                      │
    ├─────────────────────────────────────────────────────────────┤
-   │  1. Imports                 | Импорты и шрифты              │
-   │  2. Variables               | Переменные (цвета)            │
-   │  3. Hidden UI               | Скрытие элементов             │
-   │     3.1 Toolbar             |   Верхняя панель              │
-   │     3.2 DM / Sidebar        |   ЛС и сайдбар                │
-   │     3.3 Navigation & Misc   |   Навигация и прочее          │
-   │     3.4 Members & Activity  |   Участники и активность      │
-   │  4. Layout                  | Лейаут и позиционирование     │
-   │  5. Display Names           | Стили ников                   │
-   │  6. Privacy Masks           | Скрытие личных данных         │
-   │  7. Picker Theme            | Тема пикеров                  │
-   │     7.1 Backgrounds         |   Фоны                        │
-   │     7.2 Search              |   Поиск                       │
-   │     7.3 Tabs                |   Вкладки                     │
-   │     7.4 GIF Picker          |   Гифки                       │
-   │     7.5 Sticker Sidebar     |   Стикеры                     │
-   │     7.6 Inspector           |   Инспектор                   │
-   │  8. Context Menu            | Контекстное меню (ПКМ)        │
-   │  9. Active Contacts         | Активные контакты             │
-   │ 10. Badge Animations        | Анимации бейджей              │
-   │ 11. Vencord                 | Уведомления и настройки       │
+   │  1. Imports                   | Импорты и шрифты            │
+   │  2. Variables                 | Переменные (цвета)          │
+   │  3. Global Fixes              | Глобальные фиксы            │
+   │  4. Hidden UI                 | Скрытие элементов           │
+   │     4.1 Toolbar               |   Верхняя панель            │
+   │     4.2 DM / Sidebar          |   ЛС и сайдбар              │
+   │     4.3 Navigation & Misc     |   Навигация и прочее        │
+   │     4.4 Members & Activity    |   Участники и активность    │
+   │  5. Layout                    | Лейаут и позиционирование   │
+   │  6. Visual Refresh Compat.    | Совместимость с новым UI    │
+   │  7. Display Names             | Стили ников                 │
+   │  8. Privacy Masks             | Скрытие личных данных       │
+   │  9. Picker Theme              | Тема пикеров                │
+   │     9.1 Backgrounds           |   Фоны                      │
+   │     9.2 Search                |   Поиск                     │
+   │     9.3 Tabs                  |   Вкладки                   │
+   │     9.4 GIF Picker            |   Гифки                     │
+   │     9.5 Sticker Sidebar       |   Стикеры                   │
+   │     9.6 Inspector             |   Инспектор                 │
+   │ 10. Context Menu              | Контекстное меню (ПКМ)      │
+   │ 11. Active Contacts           | Активные контакты           │
+   │ 12. Search & Dialogs          | Ctrl+K, вкладки, сообщение  │
+   │ 13. Badge Animations          | Анимации бейджей            │
+   │ 14. Vencord                   | Уведомления и настройки     │
    └─────────────────────────────────────────────────────────────┘ */
 
 
@@ -69,11 +72,36 @@
 }
 
 
+/* Softer accent colors for menus and tabs (tweak the % to taste)
+   Приглушённые акценты для меню и вкладок (меняй проценты под себя) */
+:root {
+    --set-accent:       color-mix(in srgb, var(--picker-accent) 40%, var(--picker-bg-dark));
+    --set-accent-hover: color-mix(in srgb, var(--picker-accent) 60%, var(--picker-bg-dark));
+    --set-icon:         color-mix(in srgb, var(--picker-cat-color) 60%, var(--picker-bg-dark));
+    --set-dim:          color-mix(in srgb, var(--picker-text-dim) 70%, var(--picker-bg-dark));
+}
+
+
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 3. HIDDEN UI | СКРЫТИЕ ЛИШНИХ ЭЛЕМЕНТОВ                                   */
+/* 3. GLOBAL FIXES | ГЛОБАЛЬНЫЕ ФИКСЫ                                         */
 /*////////////////////////////////////////////////////////////////////////////*/
 
-/* ── 3.1 Toolbar | Верхняя панель ─────────────────────────────────────────── */
+/* Sticker size fix | Фикс размера стикеров */
+[class^=clickableSticker] {
+    width: fit-content;
+}
+
+/* Remove bottom margin from server list | Убрать нижний отступ списка серверов */
+.visual-refresh .guilds_c48ade {
+    margin-bottom: 0;
+}
+
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 4. HIDDEN UI | СКРЫТИЕ ЛИШНИХ ЭЛЕМЕНТОВ                                    */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* ── 4.1 Toolbar | Верхняя панель ─────────────────────────────────────────── */
 
 /* Apps, Inbox, Help | Приложения, Почта, Помощь */
 div[aria-label="Приложения"], div[aria-label="Apps"],
@@ -94,12 +122,14 @@ div[role="button"]:has(svg path[d*="M-7,10"]) {
 }
 
 
-/* ── 3.2 DM / Sidebar | ЛС и сайдбар ──────────────────────────────────────── */
+/* ── 4.2 DM / Sidebar | ЛС и сайдбар ──────────────────────────────────────── */
 
 /* Add to conversation | Добавить в беседу */
 div[class*="privateChannelRecipientsInviteButtonIconContainer"],
 div[aria-label="Добавить в беседу"],
-div[aria-label="Add to Conversation"] {
+div[aria-label="Add to Conversation"],
+div[aria-label="Добавить друзей в беседу"],
+div[aria-label="Add Friends to Conversation"] {
     display: none !important;
 }
 
@@ -130,7 +160,7 @@ div[class*="sectionDivider_u88IQl"] {
 }
 
 
-/* ── 3.3 Navigation & Misc | Навигация и прочее ───────────────────────────── */
+/* ── 4.3 Navigation & Misc | Навигация и прочее ───────────────────────────── */
 
 /* Back / forward buttons, divider, Checkpoint | Кнопки назад/вперёд, разделитель, Checkpoint */
 div[class*="backForwardButtons_nS9Yqn"],
@@ -145,7 +175,7 @@ div[class*="clickable_fErCLM"] {
 }
 
 
-/* ── 3.4 Members & Activity | Участники и активность ──────────────────────── */
+/* ── 4.4 Members & Activity | Участники и активность ──────────────────────── */
 
 /* Activity in member list | Активность в списке участников */
 [class*='membersGroup']:has([role=button]),
@@ -161,7 +191,7 @@ div[class*="clickable_fErCLM"] {
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 4. LAYOUT | ЛЕЙАУТ И ПОЗИЦИОНИРОВАНИЕ                                      */
+/* 5. LAYOUT | ЛЕЙАУТ И ПОЗИЦИОНИРОВАНИЕ                                      */
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Channel title padding | Отступ заголовка канала */
@@ -195,7 +225,69 @@ section[class^=title_] {
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 5. DISPLAY NAMES | СТИЛИ НИКОВ                                             */
+/* 6. VISUAL REFRESH COMPATIBILITY | СОВМЕСТИМОСТЬ С НОВЫМ ИНТЕРФЕЙСОМ        */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* Old user panel position | Старое позиционирование панели пользователя */
+.visual-refresh [class*="panels"] {
+    right: var(--space-xs) !important;
+    left: auto !important;
+    bottom: var(--space-xs) !important;
+    width: calc(99% - var(--space-xs) * 2) !important;
+    z-index: 1002 !important;
+}
+
+/* Limit Modal v2 to Modal v1 width | Ширина Modal v2 как в v1 */
+[class^="layoutContainer"] {
+    max-width: 600px;
+}
+
+/* Profile modal v2 -> v1 style | Профиль в стиле Modal v1 */
+.user-profile-modal-v2 {
+
+    /* Disable widgets | Отключить виджеты */
+    [id^="widgets"],
+    [role^="tablist"] {
+        display: none;
+    }
+
+    /* Profile content | Контент профиля */
+    [class*="profileContentInner"] {
+        --custom-modal-v2-padding: var(--space-0);
+
+        [class^="profile"] {
+            width: 100%;
+            border-radius: var(--radius-lg);
+
+            [class*="profileHeaderBanner"] {
+                border-radius: 0 !important;
+
+                [class^="editButton"] {
+                    inset-inline-end: var(--space-48);
+                }
+            }
+        }
+    }
+
+    /* Profile frame scale fix | Фикс масштаба рамки профиля */
+    [class^="profileFrame"] {
+        width: 103% !important;
+    }
+}
+
+/* Remove Nitro upsells from Modal v2 | Убрать рекламу Nitro в Modal v2 */
+#user-profile-editing-panel {
+    [class^="floatingFooter"],
+    [class^="guildProfileUpsell"],
+    [class^="premium"],
+    [class^="expressiveWrapper"] {
+        display: none;
+    }
+}
+
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 7. DISPLAY NAMES | СТИЛИ НИКОВ                                             */
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Remove nickname effects and colors | Убрать эффекты и цвета у ников */
@@ -211,7 +303,7 @@ section[class^=title_] {
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 6. PRIVACY MASKS | СКРЫТИЕ ЛИЧНЫХ ДАННЫХ В НАСТРОЙКАХ                      */
+/* 8. PRIVACY MASKS | СКРЫТИЕ ЛИЧНЫХ ДАННЫХ В НАСТРОЙКАХ                      */
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Email | Почта */
@@ -232,10 +324,10 @@ section[class^=title_] {
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 7. PICKER THEME | ТЕМА ПИКЕРОВ                                             */
+/* 9. PICKER THEME | ТЕМА ПИКЕРОВ                                             */
 /*////////////////////////////////////////////////////////////////////////////*/
 
-/* ── 7.1 Backgrounds | Фоны ───────────────────────────────────────────────── */
+/* ── 9.1 Backgrounds | Фоны ───────────────────────────────────────────────── */
 
 /* Main picker containers | Основные контейнеры пикера */
 .contentWrapper_58b0l2,
@@ -255,7 +347,7 @@ section[class^=title_] {
 }
 
 
-/* ── 7.2 Search | Поиск ───────────────────────────────────────────────────── */
+/* ── 9.2 Search | Поиск ───────────────────────────────────────────────────── */
 
 /* Search field | Поле поиска */
 .header_rfDq2B .wrapper_UcGqzv,
@@ -280,7 +372,7 @@ section[class^=title_] {
 }
 
 
-/* ── 7.3 Tabs | Вкладки (hash-proof) ──────────────────────────────────────── */
+/* ── 9.3 Tabs | Вкладки (hash-proof) ──────────────────────────────────────── */
 
 /* Inactive tab | Неактивная вкладка */
 [role="tablist"] [class*="navButton_"] {
@@ -296,7 +388,7 @@ section[class^=title_] {
 }
 
 
-/* ── 7.4 GIF Picker | Гифки ───────────────────────────────────────────────── */
+/* ── 9.4 GIF Picker | Гифки ───────────────────────────────────────────────── */
 
 /* GIF cards | Карточки гифок */
 [class*="result_"] {
@@ -365,7 +457,7 @@ section[class^=title_] {
 }
 
 
-/* ── 7.5 Sticker Sidebar | Стикеры ────────────────────────────────────────── */
+/* ── 9.5 Sticker Sidebar | Стикеры ────────────────────────────────────────── */
 
 /* Sidebar scroller | Скролл боковой панели */
 [class*="scroller_EwKtHG"] {
@@ -403,7 +495,7 @@ section[class^=title_] {
 }
 
 
-/* ── 7.6 Inspector | Инспектор ────────────────────────────────────────────── */
+/* ── 9.6 Inspector | Инспектор ────────────────────────────────────────────── */
 
 /* Primary title | Основной заголовок */
 [class*="inspector_"] [class*="titlePrimary_"] {
@@ -417,7 +509,7 @@ section[class^=title_] {
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 8. CONTEXT MENU | КОНТЕКСТНОЕ МЕНЮ (ПКМ)                                   */
+/* 10. CONTEXT MENU | КОНТЕКСТНОЕ МЕНЮ (ПКМ)                                  */
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Menu background | Фон меню */
@@ -481,7 +573,7 @@ section[class^=title_] {
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 9. ACTIVE CONTACTS | АКТИВНЫЕ КОНТАКТЫ                                     */
+/* 11. ACTIVE CONTACTS | АКТИВНЫЕ КОНТАКТЫ                                    */
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Panel: theme background, no own color | Панель: фон темы, без своего цвета */
@@ -515,7 +607,245 @@ section[class^=title_] {
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 10. BADGE ANIMATIONS | АНИМАЦИИ БЕЙДЖЕЙ                                    */
+/* 12. SEARCH & DIALOGS | ПОИСК, ВКЛАДКИ, НОВОЕ СООБЩЕНИЕ                     */
+/*////////////////////////////////////////////////////////////////////////////*/
+
+/* ── 12.1 Quick Switcher | Быстрый поиск ───────────────────────────────────── */
+
+/* Re-point Discord's own surface variables to theme colors, then paint directly
+   Переназначаем штатные переменные Discord на цвета темы и красим напрямую */
+body [data-mana-component="modal"]:has([class*="quickswitcher_"]) {
+    --background-surface-high:   var(--picker-bg);
+    --background-surface-higher: var(--picker-bg);
+    --background-base-low:       var(--picker-bg);
+    --background-base-lower:     var(--picker-bg-dark);
+    --background-base-lowest:    var(--picker-bg-dark);
+    --background-mod-subtle:     var(--set-accent);
+    --background-mod-normal:     var(--set-accent);
+    --background-mod-strong:     var(--set-accent-hover);
+    --modal-background:          var(--picker-bg);
+    --input-background:          var(--picker-bg-dark);
+    background: var(--picker-bg) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+body [class*="quickswitcher_"] {
+    background: transparent !important;
+}
+
+/* Input | Поле ввода */
+body [class*="quickswitcher_"] [class*="input_"] {
+    background: var(--picker-bg-dark) !important;
+    color: var(--picker-text) !important;
+    caret-color: var(--set-icon) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 8px !important;
+}
+
+body [class*="quickswitcher_"] [class*="input_"]::placeholder {
+    color: var(--set-dim) !important;
+}
+
+/* Results area | Область результатов */
+body [class*="quickswitcher_"] [class*="resultsArea_"] {
+    background: var(--picker-bg-dark) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 8px !important;
+}
+
+body [class*="quickswitcher_"] [class*="scroller_"],
+body [class*="quickswitcher_"] [class*="protip_"] {
+    background: transparent !important;
+}
+
+/* Group headers | Заголовки групп */
+body [class*="quickswitcher_"] [class*="header_hm"] {
+    color: var(--set-dim) !important;
+}
+
+/* Results | Результаты */
+body [class*="quickswitcher_"] [class*="result_hm"] {
+    background: transparent !important;
+    color: var(--set-dim) !important;
+    border-radius: 6px !important;
+}
+
+body [class*="quickswitcher_"] [class*="result_hm"]:hover {
+    background: color-mix(in srgb, var(--set-accent) 50%, transparent) !important;
+}
+
+/* Selected result | Выбранный результат */
+body [class*="quickswitcher_"] [class*="result_hm"][aria-selected="true"] {
+    background: var(--set-accent) !important;
+    color: var(--picker-text) !important;
+}
+
+/* Names and secondary text | Названия и второстепенный текст */
+body [class*="quickswitcher_"] [class*="match_hm"] {
+    color: var(--picker-text) !important;
+}
+
+body [class*="quickswitcher_"] [class*="username_hm"],
+body [class*="quickswitcher_"] [class*="note_hm"],
+body [class*="quickswitcher_"] [class*="miscContainer_"] {
+    color: var(--set-dim) !important;
+}
+
+/* Channel icons | Иконки каналов */
+body [class*="quickswitcher_"] [class*="icon_hm"] {
+    color: var(--set-icon) !important;
+}
+
+/* Tip at the bottom | Подсказка внизу */
+body [class*="quickswitcher_"] [class*="protip_"] [class*="pro_"],
+body [class*="quickswitcher_"] [class*="autocompleteQuerySymbol_"],
+body [class*="quickswitcher_"] [class*="protip_"] a {
+    color: var(--set-icon) !important;
+}
+
+body [class*="quickswitcher_"] [class*="tip_"] {
+    color: var(--set-dim) !important;
+}
+
+
+/* ── 12.2 Friends tabs | Вкладки друзей ────────────────────────────────────── */
+
+/* Tab background only, text color is left untouched
+   Только фон вкладки, цвет текста не трогаем */
+body [role="tab"][class*="themed_"]:not([class*="primary"]) {
+    --background-mod-subtle: var(--set-accent);
+    --background-mod-normal: var(--set-accent);
+    --background-mod-strong: var(--set-accent-hover);
+    border-radius: 6px !important;
+}
+
+body [role="tab"][class*="themed_"]:not([class*="primary"]):hover {
+    background-color: color-mix(in srgb, var(--set-accent) 50%, transparent) !important;
+}
+
+/* Selected tab | Выбранная вкладка */
+body [role="tab"][class*="themed_"][aria-selected="true"]:not([class*="primary"]) {
+    background-color: var(--set-accent) !important;
+    background-image: none !important;
+}
+
+
+/* ── 12.3 New message / group DM modal | Окно «Новое сообщение» ─────────────── */
+
+/* Window: re-point Discord surface variables to theme colors
+   Окно: переназначаем штатные переменные Discord на цвета темы */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) {
+    --background-surface-high:   var(--picker-bg);
+    --background-surface-higher: var(--picker-bg);
+    --background-base-low:       var(--picker-bg);
+    --background-base-lower:     var(--picker-bg-dark);
+    --background-base-lowest:    var(--picker-bg-dark);
+    --background-mod-subtle:     var(--set-accent);
+    --background-mod-normal:     var(--set-accent);
+    --background-mod-strong:     var(--set-accent-hover);
+    --modal-background:          var(--picker-bg);
+    --input-background:          var(--picker-bg-dark);
+    background: var(--picker-bg) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+/* Inner layers: no own background | Внутренние слои: без своего фона */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="section_dvN"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="header_dvN"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="bodyControls_"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="bodyList_"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="bodySpacer"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_"] {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Title, subtitle, close button | Заголовок, подзаголовок, кнопка закрытия */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="headerTitle_"] {
+    color: var(--picker-text) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="headerSubtitle_"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="helperTextContainer_"] > * {
+    color: var(--set-dim) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="button_F7qvhY"][class*="icon-only"] {
+    background: transparent !important;
+    color: var(--set-icon) !important;
+}
+
+/* Search | Поиск */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="searchBar_"] [class*="wrapper_UcGqzv"] {
+    background: var(--picker-bg-dark) !important;
+    border: 1px solid var(--picker-border) !important;
+    border-radius: 8px !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="searchBar_"] input {
+    color: var(--picker-text) !important;
+    caret-color: var(--set-icon) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="searchBar_"] input::placeholder {
+    color: var(--set-dim) !important;
+}
+
+/* Friend rows | Строки друзей */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="friendWrapper_"] [class*="friend_"] {
+    background: transparent !important;
+    border-radius: 8px !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="friendWrapper_"]:hover [class*="friend_"] {
+    background: color-mix(in srgb, var(--set-accent) 50%, transparent) !important;
+}
+
+/* Selected row | Выбранная строка */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="friendSelected_"] {
+    background: var(--set-accent) !important;
+}
+
+/* Names and secondary text | Ники и второстепенный текст */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="nickname_"] {
+    color: var(--picker-text) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="match_"] > div,
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="discordTag_"],
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="mutualGuildCount_"] {
+    color: var(--set-dim) !important;
+}
+
+/* Checkbox | Чекбокс */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="checkboxIndicator_"] {
+    color: var(--set-icon) !important;
+    border-color: var(--set-dim) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [role="checkbox"][aria-checked="true"] [class*="checkboxIndicator_"] {
+    background: var(--set-accent-hover) !important;
+    border-color: var(--set-icon) !important;
+    color: var(--picker-text) !important;
+}
+
+/* Footer buttons: background only, text color is left untouched
+   Кнопки внизу: только фон, цвет текста не трогаем */
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_"] [class*="button_F7qvhY"][class*="secondary_"] {
+    background: var(--set-accent) !important;
+}
+
+body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_"] [class*="button_F7qvhY"][class*="primary_"] {
+    background: color-mix(in srgb, var(--picker-accent) 75%, var(--picker-bg-dark)) !important;
+}
+
+
+/*////////////////////////////////////////////////////////////////////////////*/
+/* 13. BADGE ANIMATIONS | АНИМАЦИИ БЕЙДЖЕЙ                                    */
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Badge container | Контейнер бейджа */
@@ -573,7 +903,7 @@ span[class*="chipletContainerInner_"][class*="clanTag_"] > [class*="text_"] {
 
 
 /*////////////////////////////////////////////////////////////////////////////*/
-/* 11. VENCORD | УВЕДОМЛЕНИЯ И НАСТРОЙКИ VENCORD                              */
+/* 14. VENCORD | УВЕДОМЛЕНИЯ И НАСТРОЙКИ VENCORD                              */
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Notification popup | Всплывающее уведомление */
