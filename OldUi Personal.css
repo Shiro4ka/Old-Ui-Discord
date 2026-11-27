@@ -228,7 +228,7 @@ section[class^=title_] {
 /* 6. VISUAL REFRESH COMPATIBILITY | СОВМЕСТИМОСТЬ С НОВЫМ ИНТЕРФЕЙСОМ        */
 /*////////////////////////////////////////////////////////////////////////////*/
 
-/* Old user panel position | Старое позиционирование панели пользователя */
+/* Old user panel position | Старое позиционирование панели пользователя 
 .visual-refresh [class*="panels"] {
     right: var(--space-xs) !important;
     left: auto !important;
@@ -237,21 +237,21 @@ section[class^=title_] {
     z-index: 1002 !important;
 }
 
-/* Limit Modal v2 to Modal v1 width | Ширина Modal v2 как в v1 */
+/* Limit Modal v2 to Modal v1 width | Ширина Modal v2 как в v1 
 [class^="layoutContainer"] {
     max-width: 600px;
 }
 
 /* Profile modal v2 -> v1 style | Профиль в стиле Modal v1 */
-.user-profile-modal-v2 {
+/*.user-profile-modal-v2 {
 
-    /* Disable widgets | Отключить виджеты */
+    /* Disable widgets | Отключить виджеты 
     [id^="widgets"],
     [role^="tablist"] {
         display: none;
     }
 
-    /* Profile content | Контент профиля */
+    /* Profile content | Контент профиля 
     [class*="profileContentInner"] {
         --custom-modal-v2-padding: var(--space-0);
 
@@ -269,13 +269,13 @@ section[class^=title_] {
         }
     }
 
-    /* Profile frame scale fix | Фикс масштаба рамки профиля */
+    /* Profile frame scale fix | Фикс масштаба рамки профиля 
     [class^="profileFrame"] {
         width: 103% !important;
     }
-}
+}*/
 
-/* Remove Nitro upsells from Modal v2 | Убрать рекламу Nitro в Modal v2 */
+/* Remove Nitro upsells from Modal v2 | Убрать рекламу Nitro в Modal v2 
 #user-profile-editing-panel {
     [class^="floatingFooter"],
     [class^="guildProfileUpsell"],
@@ -284,7 +284,7 @@ section[class^=title_] {
         display: none;
     }
 }
-
+*/
 
 /*////////////////////////////////////////////////////////////////////////////*/
 /* 7. DISPLAY NAMES | СТИЛИ НИКОВ                                             */
@@ -849,7 +849,8 @@ body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Badge container | Контейнер бейджа */
-[class*="clanTag_"] [class*="text_"] {
+[class*="clanTag_"] [class*="text_"],
+[class*="clanTagChiplet_"] [class*="messageText_"] {
     display: inline-flex !important;
     align-items: center !important;
     overflow: visible !important;
@@ -858,7 +859,8 @@ body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_
 }
 
 /* Tag text hidden by default | Текст тега скрыт по умолчанию */
-[class*="clanTag_"] [class*="tagText_"] {
+[class*="clanTag_"] [class*="tagText_"],
+[class*="clanTagChiplet_"] [class*="tagText_"] {
     display: inline-block !important;
     white-space: nowrap !important;
     overflow: hidden !important;
@@ -874,7 +876,8 @@ body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_
 }
 
 /* Show on hover | Показать при наведении */
-[class*="clanTag_"]:hover [class*="tagText_"] {
+[class*="clanTag_"]:hover [class*="tagText_"],
+[class*="clanTagChiplet_"]:hover [class*="tagText_"] {
     max-width: 120px !important;
     margin-left: 4px !important;
     opacity: 1 !important;
@@ -888,16 +891,22 @@ body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_
 
 /* Badge chip: transparent, theme background shows through (like Active Contacts)
    Плашка бейджа: прозрачная, виден фон темы (как у активных контактов) */
+
 span[class*="chipletContainerInner_"][class*="clanTag_"],
+span[class*="chipletContainerInner_"][class*="clanTagChiplet_"],
 span[class*="chipletContainerInner_"][class*="clanTag_"] > [class*="text_"],
+span[class*="chipletContainerInner_"][class*="clanTagChiplet_"] > [class*="messageText_"],
 span[class*="chipletContainerInner_"][class*="clanTag_"]::before,
-span[class*="chipletContainerInner_"][class*="clanTag_"]::after {
+span[class*="chipletContainerInner_"][class*="clanTag_"]::after,
+span[class*="chipletContainerInner_"][class*="clanTagChiplet_"]::before,
+span[class*="chipletContainerInner_"][class*="clanTagChiplet_"]::after {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
 
-span[class*="chipletContainerInner_"][class*="clanTag_"] > [class*="text_"] {
+span[class*="chipletContainerInner_"][class*="clanTag_"] > [class*="text_"],
+span[class*="chipletContainerInner_"][class*="clanTagChiplet_"] > [class*="messageText_"] {
     color: var(--picker-text) !important;
 }
 
