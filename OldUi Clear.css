@@ -845,7 +845,8 @@ body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_
 /*////////////////////////////////////////////////////////////////////////////*/
 
 /* Badge container | Контейнер бейджа */
-[class*="clanTag_"] [class*="text_"] {
+[class*="clanTag_"] [class*="text_"],
+[class*="clanTagChiplet_"] [class*="messageText_"] {
     display: inline-flex !important;
     align-items: center !important;
     overflow: visible !important;
@@ -854,7 +855,8 @@ body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_
 }
 
 /* Tag text hidden by default | Текст тега скрыт по умолчанию */
-[class*="clanTag_"] [class*="tagText_"] {
+[class*="clanTag_"] [class*="tagText_"],
+[class*="clanTagChiplet_"] [class*="tagText_"] {
     display: inline-block !important;
     white-space: nowrap !important;
     overflow: hidden !important;
@@ -870,7 +872,8 @@ body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_
 }
 
 /* Show on hover | Показать при наведении */
-[class*="clanTag_"]:hover [class*="tagText_"] {
+[class*="clanTag_"]:hover [class*="tagText_"],
+[class*="clanTagChiplet_"]:hover [class*="tagText_"] {
     max-width: 120px !important;
     margin-left: 4px !important;
     opacity: 1 !important;
@@ -884,16 +887,22 @@ body [data-mana-component="modal"]:has([class*="bodyList_"]) [class*="actionBar_
 
 /* Badge chip: transparent, theme background shows through (like Active Contacts)
    Плашка бейджа: прозрачная, виден фон темы (как у активных контактов) */
+
 span[class*="chipletContainerInner_"][class*="clanTag_"],
+span[class*="chipletContainerInner_"][class*="clanTagChiplet_"],
 span[class*="chipletContainerInner_"][class*="clanTag_"] > [class*="text_"],
+span[class*="chipletContainerInner_"][class*="clanTagChiplet_"] > [class*="messageText_"],
 span[class*="chipletContainerInner_"][class*="clanTag_"]::before,
-span[class*="chipletContainerInner_"][class*="clanTag_"]::after {
+span[class*="chipletContainerInner_"][class*="clanTag_"]::after,
+span[class*="chipletContainerInner_"][class*="clanTagChiplet_"]::before,
+span[class*="chipletContainerInner_"][class*="clanTagChiplet_"]::after {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
 
-span[class*="chipletContainerInner_"][class*="clanTag_"] > [class*="text_"] {
+span[class*="chipletContainerInner_"][class*="clanTag_"] > [class*="text_"],
+span[class*="chipletContainerInner_"][class*="clanTagChiplet_"] > [class*="messageText_"] {
     color: var(--picker-text) !important;
 }
 
